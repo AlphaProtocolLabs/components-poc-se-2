@@ -29,7 +29,7 @@ function MyMapComponent({
 }
 const MyApp = () => {
   const center = { lat: 39.771, lng: -104.979 };
-  const zoom = 4;
+  const zoom = 15;
 
   return (
   <Wrapper apiKey={"AIzaSyD7BALiQ3L-rupI-cyiMmE2r5DPNlI-5Tg"} render={render}><MyMapComponent center={center} zoom={zoom} /> </Wrapper>
