@@ -2,7 +2,7 @@ import Styles from '../../styles/BottomNav.module.css'
 import Link from "next/link";
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { RiHomeSmile2Line, RiHomeSmile2Fill, RiSearchEyeFill } from 'react-icons/ri'
+import { RiHomeSmile2Line, RiHomeSmile2Fill, RiSearchEyeFill, RiCameraLensFill } from 'react-icons/ri'
 import { BiSearchAlt } from 'react-icons/bi'
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { RiUser5Line, RiUser5Fill } from 'react-icons/ri'
@@ -48,18 +48,23 @@ const BottomNav = props => {
                     />}</Link>
             </div>
             <div className={`${Styles.bnTab}`}>
-                <Link href="/search">
                 {activeTabs === 'search' ?
-                    <RiSearchEyeFill
-                        size='35'
-                        color='#000'
-                        onClick={() => setActiveTabs('search')}
-                    /> :
+                    // TODO: camera icon refresh 
+                    <Link href="qrscan">
+                        <RiCameraLensFill
+                            size='35'
+                            color='#000'
+                            onClick={() => setActiveTabs('search')}
+                        />
+                    </Link>
+                        :
+                    <Link href="search">
                     <BiSearchAlt
                         size='35'
                         color='#000'
-                        onClick={() => setActiveTabs('search')}
-                    />}</Link>
+                        onClick={() => setActiveTabs('search')} />
+                    </Link>
+                    }
             </div>
             <div className={`${Styles.bnTab}`}>
                 <Link href="/example-ui">

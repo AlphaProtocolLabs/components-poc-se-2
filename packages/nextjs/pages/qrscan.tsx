@@ -1,13 +1,13 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { ContractData, ContractInteraction, BottomNav, MapView } from "~~/components/ExampleUi";
+import { ContractData, ContractInteraction, BottomNav, QRScanView} from "../components/ExampleUi";
 import { useEffect, useRef, ReactElement } from "react";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import Spinner from "../components/Spinner";
 import { useRouter } from "next/router";
 import { getRouteMatcher } from "next/dist/shared/lib/router/utils/route-matcher";
 
-const ExampleUI: NextPage = () => {
+const Search: NextPage = () => {
   const router = useRouter();
 
   const isHomeActive = router.pathname === "/example-ui";
@@ -23,12 +23,12 @@ const ExampleUI: NextPage = () => {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap" rel="stylesheet" />
       </Head>
-      <div>
-          Home
+      <div className="grid lg:grid-cols-2 flex-grow" data-theme="exampleUi">
+          <QRScanView />
           <BottomNav name='home' />
-      </div>
+        </div>
     </>
   );
 };
 
-export default ExampleUI;
+export default Search;
