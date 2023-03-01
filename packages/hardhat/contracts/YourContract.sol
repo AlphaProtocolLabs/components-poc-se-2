@@ -70,7 +70,31 @@ constructor() ERC721("YourContract", "QRNFT") {
         // only 20 available at this location
         if(toggle == true && tokenID <=20)
         {
-            _mint(to, tokenID);
+            string memory uri = Base64.encode(
+            bytes(
+                string(
+                    abi.encodePacked(
+                        '{"name": "QR-NFT-PROTOTYPE",',
+                        '"description": "QR NFT associated with a real world location",',
+                        '"image": "', "https://ipfs.io/ipfs/QmTgqnhFBMkfT9s8PHKcdXBn1f5bG3Q5hmBaR4U6hoTvb1?filename=Chainlink_Elf.png", '",'
+                        '"attributes": [',
+                        '{',
+                            '"trait_type": "distance",',
+                            '"value": ', "test value",
+                            '}]'
+                        '}'
+                    )
+                )
+            )
+            );
+        // Create token URI
+        string memory finalTokenURI = string(
+            abi.encodePacked("data:application/json;base64,", uri)
+        );
+        _mint(to, tokenID);
+        _setTokenURI(tokenID, finalTokenURI);
+            
+            
             tokenID = tokenID + 1 ; 
         }
     }
