@@ -9,36 +9,27 @@ import Spinner from "../Spinner";
 const getMapBounds = (map, maps, places) => {
   const bounds = new maps.LatLngBounds();
 
-  places.forEach((place) => {
-    bounds.extend(new maps.LatLng(
-      place.geometry.location.lat,
-      place.geometry.location.lng,
-    ));
+  places.forEach(place => {
+    bounds.extend(new maps.LatLng(place.geometry.location.lat, place.geometry.location.lng));
   });
   return bounds;
 };
 
 // Re-center map when resizing the window
 const bindResizeListener = (map, maps, bounds) => {
-  maps.event.addDomListenerOnce(map, 'idle', () => {
-    maps.event.addDomListener(window, 'resize', () => {
+  maps.event.addDomListenerOnce(map, "idle", () => {
+    maps.event.addDomListener(window, "resize", () => {
       map.fitBounds(bounds);
     });
   });
 };
 
 const render = (status: Status): ReactElement => {
-  if (status === Status.FAILURE) return (<ErrorDialog />)
+  if (status === Status.FAILURE) return <ErrorDialog />;
   return <Spinner width="25" height="25" />;
 };
 
-function MyMapComponent({
-  center,
-  zoom,
-}: {
-  center: google.maps.LatLngLiteral;
-  zoom: number;
-}) {
+function MyMapComponent({ center, zoom }: { center: google.maps.LatLngLiteral; zoom: number }) {
   const ref = useRef();
 
   useEffect(() => {
@@ -55,14 +46,16 @@ const Map = () => {
   const zoom = 15;
 
   return (
-  <Wrapper apiKey={"AIzaSyD7BALiQ3L-rupI-cyiMmE2r5DPNlI-5Tg"} render={render}><MyMapComponent center={center} zoom={zoom} /> </Wrapper>
+    <Wrapper apiKey={"AIzaSyD7BALiQ3L-rupI-cyiMmE2r5DPNlI-5Tg"} render={render}>
+      <MyMapComponent center={center} zoom={zoom} />{" "}
+    </Wrapper>
   );
 };
 
 const ErrorDialog = () => {
   return (
     <div className="alert alert-danger" role="alert">
-    Failure
+      Failure
     </div>
   );
 };
