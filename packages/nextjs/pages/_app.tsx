@@ -18,6 +18,7 @@ import { useAppStore } from "~~/services/store/store";
 import { useEthPrice } from "~~/hooks/scaffold-eth";
 
 import NextNProgress from "nextjs-progressbar";
+import { BottomNav } from "~~/components/ExampleUi";
 
 const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
   const price = useEthPrice();
@@ -37,6 +38,9 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
           <Header />
           <main className="relative flex flex-col flex-1">
             <Component {...pageProps} />
+              <div>
+                <BottomNav name='home' />
+            </div>
           </main>
           <Footer />
         </div>

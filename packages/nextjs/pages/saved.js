@@ -4,7 +4,6 @@ const Saved = () => {
     return (
         <div>
             Saved
-            <BottomNav name='saved' />
         </div>
     )
 }
