@@ -2,10 +2,7 @@ import Styles from '../../styles/BottomNav.module.css'
 import Link from "next/link";
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { RiHomeSmile2Line, RiHomeSmile2Fill, RiSearchEyeFill, RiCameraLensFill } from 'react-icons/ri'
-import { BiSearchAlt } from 'react-icons/bi'
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
-import { RiUser5Line, RiUser5Fill } from 'react-icons/ri'
+import { BiUser, BiGlobe, BiConversation, BiAperture, BiMessageAdd } from 'react-icons/bi'
 
 const BottomNav = props => {
     const router = useRouter()
@@ -34,24 +31,24 @@ const BottomNav = props => {
     return (
         <div className={`${Styles.bottomNav}`}>
             <div className={`${Styles.bnTab}`}>
-                <Link href="/example-ui">
-                {activeTabs === 'home' ?
-                    <RiHomeSmile2Fill
+                <Link href="/profile">
+                {activeTabs === 'profile' ?
+                    <BiUser
                         size='35'
                         color='#000'
-                        onClick={() => setActiveTabs('home')}
+                        onClick={() => setActiveTabs('profile')}
                     /> :
-                    <RiHomeSmile2Line
+                    <BiUser
                         size='35'
                         color='#000'
-                        onClick={() => setActiveTabs('home')}
+                        onClick={() => setActiveTabs('profile')}
                     />}</Link>
             </div>
             <div className={`${Styles.bnTab}`}>
                 {activeTabs === 'search' ?
-                    // TODO: camera icon refresh 
+                    // TODO: camera icon refresh
                     <Link href="qrscan">
-                        <RiCameraLensFill
+                        <BiAperture
                             size='35'
                             color='#000'
                             onClick={() => setActiveTabs('qrscan')}
@@ -59,7 +56,7 @@ const BottomNav = props => {
                     </Link>
                         :
                     <Link href="search">
-                    <BiSearchAlt
+                    <BiGlobe
                         size='35'
                         color='#000'
                         onClick={() => setActiveTabs('search')} />
@@ -67,17 +64,17 @@ const BottomNav = props => {
                     }
             </div>
             <div className={`${Styles.bnTab}`}>
-                <Link href="/example-ui">
-                {activeTabs === 'saved' ?
-                    <AiFillHeart
+                <Link href="/chats">
+                {activeTabs === 'chats' ?
+                    <BiMessageAdd
                         size='35'
                         color='#000'
-                        onClick={() => setActiveTabs('saved')}
+                        onClick={() => setActiveTabs('chats')}
                     /> :
-                    <AiOutlineHeart
+                    <BiConversation
                         size='35'
                         color='#000'
-                        onClick={() => setActiveTabs('saved')}
+                        onClick={() => setActiveTabs('chats')}
                     />}</Link>
             </div>
         </div>
