@@ -46,7 +46,7 @@ const Map = () => {
   const zoom = 15;
 
   return (
-    <Wrapper apiKey={"AIzaSyD7BALiQ3L-rupI-cyiMmE2r5DPNlI-5Tg"} render={render}>
+    <Wrapper apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY} render={render}>
       <MyMapComponent center={center} zoom={zoom} />{" "}
     </Wrapper>
   );
