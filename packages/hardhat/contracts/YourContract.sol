@@ -72,7 +72,7 @@ contract YourContract is ERC721, ERC721URIStorage{
 
     }
 
-    function mint(address to, int real_x, int real_y) external {
+    function mint(int real_x, int real_y) external {
         bool toggle = withinBounds(real_x, real_y);
         // only 20 available at this location
         if(toggle == true && tokenID <=amount)
@@ -98,7 +98,7 @@ contract YourContract is ERC721, ERC721URIStorage{
         string memory finalTokenURI = string(
             abi.encodePacked("data:application/json;base64,", uri)
         );
-        _mint(to, tokenID);
+        _mint(msg.sender, tokenID);
         _setTokenURI(tokenID, finalTokenURI);
             
             
