@@ -19,8 +19,15 @@ contract YourContract is ERC721, ERC721URIStorage{
 // 39.784133, -104.973355
 //truncate numbers to 6 decimal places only
 
-constructor() ERC721("YourContract", "QRNFT") {
-        //mint(msg.sender,0);
+    uint256 public amount;
+    int256 public real_x;
+    int256 public real_y;
+
+
+    constructor(uint256 _amount, int256 _real_x, int256 _real_y) ERC721("YourContract", "QRNFT") {
+        amount = _amount;
+        real_x = _real_x;
+        real_y = _real_y;
     }
 
     int private x = 39784133;
@@ -68,7 +75,7 @@ constructor() ERC721("YourContract", "QRNFT") {
     function mint(address to, int real_x, int real_y) external {
         bool toggle = withinBounds(real_x, real_y);
         // only 20 available at this location
-        if(toggle == true && tokenID <=20)
+        if(toggle == true && tokenID <=amount)
         {
             string memory uri = Base64.encode(
             bytes(
@@ -115,4 +122,25 @@ constructor() ERC721("YourContract", "QRNFT") {
     }
 }
 
+contract Factory {
+    address public owner;
+    address[] private contracts;
 
+    constructor() {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only the contract owner can access this function");
+        _;
+    }
+
+    function createContract(uint256 amount, int256 real_x, int256 real_y) public onlyOwner {
+        address newContract = address(new YourContract(amount, real_x, real_y));
+        contracts.push(newContract);
+    }
+
+    function getContracts() public view onlyOwner returns (address[] memory) {
+        return contracts;
+    }
+}
