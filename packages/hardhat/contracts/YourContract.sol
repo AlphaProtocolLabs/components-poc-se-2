@@ -11,94 +11,85 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
 
-
-
- 
-
-contract Event is ERC721, ERC721URIStorage{
+contract Location is ERC721, ERC721URIStorage{
 // 39.784133, -104.973355
 //truncate numbers to 6 decimal places only
 
-    uint256 public token_supply;
-    int256 public x;
-    int256 public y;
-    uint private tokenID = 0 ; 
-    string public finalTokenURI;
+    int256 public longitude;
+    int256 public latitude;
 
-    constructor(uint256 _token_supply, int256 _x, int256 _y, string memory URI) ERC721("YourContract", "QRNFT") {
-        token_supply = _token_supply;
-        x = _x;
-        y = _y;
-        finalTokenURI = URI;
+    uint256 private tokenID = 0; 
+    string public location_URI;
+    
+    string public location_name;
+    uint256 public max_token_supply;
+
+    uint256 public start_timeStamp;   //Used in Mint function . 
+    uint256 public end_timeStamp;
+
+    mapping(uint256 => string) public id_to_URI;
+    
+    
+    constructor(string memory _name ,int256 _longitude, int256 _latitude, uint256 _token_supply, uint256 _start_timeStamp , uint256 _end_timeStamp, string memory _URI) ERC721("Location", "LOC") {
+        location_name = _name;
+        longitude = _longitude;
+        latitude = _latitude;
+        max_token_supply = _token_supply;
+        start_timeStamp = _start_timeStamp;
+        end_timeStamp = _end_timeStamp;
+        location_URI = _URI;
     }
-
+    
     struct coords {
-        int x;
-        int y;
+        int longitude;
+        int latitude;
     }
 
     function getCoords() public view returns (coords memory) {
-        return coords(x, y);
+        return coords(longitude, latitude);
     }
 
-    function coordDifference(int real_x, int real_y) public view{
-        int delta_x = real_x - x;
-        int delta_y = real_y - y;
-    }
-
-    function abs(int x) internal pure returns (uint) {
-        if(x < 0) {
-            return uint(-x);
-        }
-        return uint(x);
-    }
-
-    function withinBounds(int real_x, int real_y) public view returns (bool) {
-        int delta_x = real_x - x;
-        int delta_y = real_y - y;
-        //100 m within targets
-        uint new_x =abs(delta_x);
-        uint new_y =abs(delta_y);
-        // has to be below 900 , 900 is 100 meters 50 meter is 450
-        if(new_x <=450 && new_y <=450)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
-    }
-
-    function mint(int real_x, int real_y) external {
-        bool toggle = withinBounds(real_x, real_y);
+    function mint(string memory _URI) external {
         // only 20 available at this location
-        if(toggle == true && tokenID < token_supply)
+
+        //TODO TIME STAMP CHECK 
+        uint time = block.timestamp;
+        
+        if(time > start_timeStamp && time < end_timeStamp && tokenID < max_token_supply)
         {
             _mint(msg.sender, tokenID);
-            _setTokenURI(tokenID, finalTokenURI);
+            id_to_URI[tokenID] = _URI;
+
             tokenID = tokenID + 1 ; 
         }
     }
 
-
-
-    function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
-        super._burn(tokenId);
+    function _burn(uint256 _tokenId) internal override(ERC721, ERC721URIStorage) {
+        delete id_to_URI[_tokenId];
+        super._burn(_tokenId);
     }
 
-    function tokenURI(uint256 tokenId)
-        public
-        view
-        override(ERC721, ERC721URIStorage)
-        returns (string memory)
-    {
-        return super.tokenURI(tokenId);
+
+    function getURI(uint256 _id) public view returns (string memory) {
+        return id_to_URI[_id];
     }
+    
+    function getLocationURI() public view returns (string memory) {
+        return location_URI;
+    }
+
+
+     function tokenURI(uint256 tokenId)
+         public
+         view
+         override(ERC721, ERC721URIStorage)
+         returns (string memory)
+     {
+         return super.tokenURI(tokenId);
+     }
 }
 
-contract EventHost {
+contract LocationFactory {
     address public owner;
     address[] private contracts;
 
@@ -111,9 +102,12 @@ contract EventHost {
         _;
     }
 
-    function createContract(uint256 amount, int256 real_x, int256 real_y, string memory URI) public onlyOwner {
-        address newContract = address(new Event(amount, real_x, real_y, URI));
+    function addLocation(string memory name , int256 real_long, int256 real_lat, uint256 maxTokenSupply , uint256 start_timeStamp , uint256 end_timeStamp , string memory URI) public onlyOwner returns (address) {
+        
+        address newContract = address(new Location(name, real_long, real_lat, maxTokenSupply, start_timeStamp, end_timeStamp, URI));
         contracts.push(newContract);
+        
+        return newContract;
     }
 
     function getContracts() public view returns (address[] memory) {
