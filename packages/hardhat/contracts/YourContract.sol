@@ -3,15 +3,11 @@ pragma solidity ^0.8.17;
 
 // Useful for debugging. Remove when deploying to a live network.
 import "hardhat/console.sol";
-// Use openzeppelin to inherit battle-tested implementations (ERC20, ERC721, etc)
-// import "@openzeppelin/contracts/access/Ownable.sol";
-
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-contract Location is ERC721, ERC721URIStorage{
+contract Location is ERC721{
 // 39.784133, -104.973355
 //truncate numbers to 6 decimal places only
 
@@ -27,6 +23,7 @@ contract Location is ERC721, ERC721URIStorage{
     uint256 public start_timeStamp;   //Used in Mint function . 
     uint256 public end_timeStamp;
 
+    mapping(address => bool) public nft_owners;
     mapping(uint256 => string) public id_to_URI;
     
     
@@ -55,44 +52,29 @@ contract Location is ERC721, ERC721URIStorage{
         //TODO TIME STAMP CHECK 
         uint time = block.timestamp;
         
-        if(time > start_timeStamp && time < end_timeStamp && tokenID < max_token_supply)
+        if(nft_owners[msg.sender] == false && time > start_timeStamp && time < end_timeStamp && tokenID < max_token_supply)
         {
             _mint(msg.sender, tokenID);
             id_to_URI[tokenID] = _URI;
-
+            nft_owners[msg.sender] = true;
             tokenID = tokenID + 1 ; 
         }
     }
 
-    function _burn(uint256 _tokenId) internal override(ERC721, ERC721URIStorage) {
-        delete id_to_URI[_tokenId];
-        super._burn(_tokenId);
-    }
-
-
     function getURI(uint256 _id) public view returns (string memory) {
         return id_to_URI[_id];
     }
-    
-    function getLocationURI() public view returns (string memory) {
-        return location_URI;
+
+    function is_nft_owner(address _address) public view returns (bool) {
+        
+        return nft_owners[_address];
     }
 
-
-     function tokenURI(uint256 tokenId)
-         public
-         view
-         override(ERC721, ERC721URIStorage)
-         returns (string memory)
-     {
-         return super.tokenURI(tokenId);
-     }
 }
 
 contract LocationFactory {
     address public owner;
     address[] private contracts;
-
     constructor() {
         owner = msg.sender;
     }
@@ -106,7 +88,6 @@ contract LocationFactory {
         
         address newContract = address(new Location(name, real_long, real_lat, maxTokenSupply, start_timeStamp, end_timeStamp, URI));
         contracts.push(newContract);
-        
         return newContract;
     }
 
