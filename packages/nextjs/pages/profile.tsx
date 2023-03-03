@@ -4,6 +4,9 @@ import { ContractData, ContractInteraction, BottomNav, MapView } from "~~/compon
 import { useEffect, useRef, ReactElement } from "react";
 import { useRouter } from "next/router";
 import { getRouteMatcher } from "next/dist/shared/lib/router/utils/route-matcher";
+//import { ContractUI } from "~~/components/scaffold-eth";
+import RainbowKitCustomConnectButton from "~~/components/scaffold-eth/RainbowKitCustomConnectButton";
+
 
 
 const Profile: NextPage = () => {
@@ -15,10 +18,9 @@ const Profile: NextPage = () => {
 
   return (
     <>
-      <div>
-          Profile
-          <BottomNav name='profile' />
-      </div>
+    <div className="flex items-center">
+        <RainbowKitCustomConnectButton />
+    </div>
     </>
   );
 };
