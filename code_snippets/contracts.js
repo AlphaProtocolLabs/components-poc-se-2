@@ -2,23 +2,38 @@ mint_contract_abi = [
 	{
 		"inputs": [
 			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "int256",
+				"name": "_longitude",
+				"type": "int256"
+			},
+			{
+				"internalType": "int256",
+				"name": "_latitude",
+				"type": "int256"
+			},
+			{
 				"internalType": "uint256",
 				"name": "_token_supply",
 				"type": "uint256"
 			},
 			{
-				"internalType": "int256",
-				"name": "_x",
-				"type": "int256"
+				"internalType": "uint256",
+				"name": "_start_timeStamp",
+				"type": "uint256"
 			},
 			{
-				"internalType": "int256",
-				"name": "_y",
-				"type": "int256"
+				"internalType": "uint256",
+				"name": "_end_timeStamp",
+				"type": "uint256"
 			},
 			{
 				"internalType": "string",
-				"name": "URI",
+				"name": "_URI",
 				"type": "string"
 			}
 		],
@@ -138,31 +153,13 @@ mint_contract_abi = [
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "int256",
-				"name": "real_x",
-				"type": "int256"
-			},
-			{
-				"internalType": "int256",
-				"name": "real_y",
-				"type": "int256"
-			}
-		],
-		"name": "coordDifference",
-		"outputs": [],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [],
-		"name": "finalTokenURI",
+		"name": "end_timeStamp",
 		"outputs": [
 			{
-				"internalType": "string",
+				"internalType": "uint256",
 				"name": "",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -195,18 +192,56 @@ mint_contract_abi = [
 				"components": [
 					{
 						"internalType": "int256",
-						"name": "x",
+						"name": "longitude",
 						"type": "int256"
 					},
 					{
 						"internalType": "int256",
-						"name": "y",
+						"name": "latitude",
 						"type": "int256"
 					}
 				],
-				"internalType": "struct Event.coords",
+				"internalType": "struct Location.coords",
 				"name": "",
 				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "getURI",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "id_to_URI",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
 			}
 		],
 		"stateMutability": "view",
@@ -239,14 +274,93 @@ mint_contract_abi = [
 	{
 		"inputs": [
 			{
-				"internalType": "int256",
-				"name": "real_x",
-				"type": "int256"
-			},
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "is_nft_owner",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "latitude",
+		"outputs": [
 			{
 				"internalType": "int256",
-				"name": "real_y",
+				"name": "",
 				"type": "int256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "location_URI",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "location_name",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "longitude",
+		"outputs": [
+			{
+				"internalType": "int256",
+				"name": "",
+				"type": "int256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "max_token_supply",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_URI",
+				"type": "string"
 			}
 		],
 		"name": "mint",
@@ -262,6 +376,25 @@ mint_contract_abi = [
 				"internalType": "string",
 				"name": "",
 				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "nft_owners",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -356,6 +489,19 @@ mint_contract_abi = [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "start_timeStamp",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "bytes4",
@@ -407,19 +553,6 @@ mint_contract_abi = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "token_supply",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -441,56 +574,6 @@ mint_contract_abi = [
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "int256",
-				"name": "real_x",
-				"type": "int256"
-			},
-			{
-				"internalType": "int256",
-				"name": "real_y",
-				"type": "int256"
-			}
-		],
-		"name": "withinBounds",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "x",
-		"outputs": [
-			{
-				"internalType": "int256",
-				"name": "",
-				"type": "int256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "y",
-		"outputs": [
-			{
-				"internalType": "int256",
-				"name": "",
-				"type": "int256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
 	}
 ]
 
@@ -503,19 +586,34 @@ event_host_abi = [
 	{
 		"inputs": [
 			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "int256",
+				"name": "real_long",
+				"type": "int256"
+			},
+			{
+				"internalType": "int256",
+				"name": "real_lat",
+				"type": "int256"
+			},
+			{
 				"internalType": "uint256",
-				"name": "amount",
+				"name": "maxTokenSupply",
 				"type": "uint256"
 			},
 			{
-				"internalType": "int256",
-				"name": "real_x",
-				"type": "int256"
+				"internalType": "uint256",
+				"name": "start_timeStamp",
+				"type": "uint256"
 			},
 			{
-				"internalType": "int256",
-				"name": "real_y",
-				"type": "int256"
+				"internalType": "uint256",
+				"name": "end_timeStamp",
+				"type": "uint256"
 			},
 			{
 				"internalType": "string",
@@ -523,8 +621,14 @@ event_host_abi = [
 				"type": "string"
 			}
 		],
-		"name": "createContract",
-		"outputs": [],
+		"name": "addLocation",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
