@@ -25,7 +25,6 @@ const ExampleUI: NextPage = () => {
       </Head>
       <div>
           Home
-          <BottomNav name='example' />
       </div>
     </>
   );

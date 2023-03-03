@@ -16,7 +16,7 @@ export default function Footer() {
   const configuredNetwork = getTargetNetwork();
 
   return (
-    <div className="min-h-0 p-5 mb-11 lg:mb-0">
+    <div className="min-h-0 mb-11 lg:mb-0">
       <div>
         <div className="fixed flex justify-between items-center w-full z-20 p-4 bottom-0 left-0 pointer-events-none">
           <div className="flex space-x-2 pointer-events-auto">
@@ -30,44 +30,6 @@ export default function Footer() {
           </div>
           <SwitchTheme className="pointer-events-auto" />
         </div>
-      </div>
-      <div className="w-full">
-        <ul className="menu menu-horizontal w-full">
-          <div className="flex justify-center items-center gap-2 text-sm w-full">
-            <div>
-              <a
-                href="https://github.com/scaffold-eth/se-2"
-                target="_blank"
-                rel="noreferrer"
-                className="underline underline-offset-2"
-              >
-                <h1> <BiUser /> </h1>
-              </a>
-            </div>
-            <span>·</span>
-            <div>
-              <a
-                href="https://buidlguidl.com/"
-                target="_blank"
-                rel="noreferrer"
-                className="underline underline-offset-2"
-              >
-                <h1> <BiGlobe /> </h1>
-              </a>
-            </div>
-            <span>·</span>
-            <div>
-              <a
-                href="https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA"
-                target="_blank"
-                rel="noreferrer"
-                className="underline underline-offset-2"
-              >
-                <h1> <BiConversation /> </h1>
-              </a>
-            </div>
-          </div>
-        </ul>
       </div>
     </div>
   );
