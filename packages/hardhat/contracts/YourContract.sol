@@ -3,129 +3,78 @@ pragma solidity ^0.8.17;
 
 // Useful for debugging. Remove when deploying to a live network.
 import "hardhat/console.sol";
-// Use openzeppelin to inherit battle-tested implementations (ERC20, ERC721, etc)
-// import "@openzeppelin/contracts/access/Ownable.sol";
-
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-
-
- 
-
-contract YourContract is ERC721, ERC721URIStorage{
+contract Location is ERC721{
 // 39.784133, -104.973355
 //truncate numbers to 6 decimal places only
 
-    uint256 public amount;
-    int256 public real_x;
-    int256 public real_y;
+    int256 public longitude;
+    int256 public latitude;
 
+    uint256 private tokenID = 0; 
+    string public location_URI;
+    
+    string public location_name;
+    uint256 public max_token_supply;
 
-    constructor(uint256 _amount, int256 _real_x, int256 _real_y) ERC721("YourContract", "QRNFT") {
-        amount = _amount;
-        real_x = _real_x;
-        real_y = _real_y;
+    uint256 public start_timeStamp;   //Used in Mint function . 
+    uint256 public end_timeStamp;
+
+    mapping(address => bool) public nft_owners;
+    mapping(uint256 => string) public id_to_URI;
+    
+    
+    constructor(string memory _name ,int256 _longitude, int256 _latitude, uint256 _token_supply, uint256 _start_timeStamp , uint256 _end_timeStamp, string memory _URI) ERC721("Location", "LOC") {
+        location_name = _name;
+        longitude = _longitude;
+        latitude = _latitude;
+        max_token_supply = _token_supply;
+        start_timeStamp = _start_timeStamp;
+        end_timeStamp = _end_timeStamp;
+        location_URI = _URI;
     }
-
-    int private x = 39784133;
-    int private y = -104973355;
-    uint private tokenID = 0 ; 
+    
     struct coords {
-        int x;
-        int y;
+        int longitude;
+        int latitude;
     }
 
     function getCoords() public view returns (coords memory) {
-        return coords(x, y);
+        return coords(longitude, latitude);
     }
 
-    function coordDifference(int real_x, int real_y) public view{
-        int delta_x = real_x - x;
-        int delta_y = real_y - y;
-    }
-
-    function abs(int x) internal pure returns (uint) {
-        if(x < 0) {
-            return uint(-x);
-        }
-        return uint(x);
-    }
-
-    function withinBounds(int real_x, int real_y) public view returns (bool) {
-        int delta_x = real_x - x;
-        int delta_y = real_y - y;
-        //100 m within targets
-        uint new_x =abs(delta_x);
-        uint new_y =abs(delta_y);
-        // has to be below 900 , 900 is 100 meters 50 meter is 450
-        if(new_x <=450 && new_y <=450)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
-    }
-
-    function mint(address to, int real_x, int real_y) external {
-        bool toggle = withinBounds(real_x, real_y);
+    function mint(string memory _URI) external {
         // only 20 available at this location
-        if(toggle == true && tokenID <=amount)
+
+        //TODO TIME STAMP CHECK 
+        uint time = block.timestamp;
+        
+        if(nft_owners[msg.sender] == false && time > start_timeStamp && time < end_timeStamp && tokenID < max_token_supply)
         {
-            string memory uri = Base64.encode(
-            bytes(
-                string(
-                    abi.encodePacked(
-                        '{"name": "QR-NFT-PROTOTYPE",',
-                        '"description": "QR NFT associated with a real world location",',
-                        '"image": "', "https://ipfs.io/ipfs/QmTgqnhFBMkfT9s8PHKcdXBn1f5bG3Q5hmBaR4U6hoTvb1?filename=Chainlink_Elf.png", '",'
-                        '"attributes": [',
-                        '{',
-                            '"trait_type": "distance",',
-                            '"value": ', "test value",
-                            '}]'
-                        '}'
-                    )
-                )
-            )
-            );
-        // Create token URI
-        string memory finalTokenURI = string(
-            abi.encodePacked("data:application/json;base64,", uri)
-        );
-        _mint(to, tokenID);
-        _setTokenURI(tokenID, finalTokenURI);
-            
-            
+            _mint(msg.sender, tokenID);
+            id_to_URI[tokenID] = _URI;
+            nft_owners[msg.sender] = true;
             tokenID = tokenID + 1 ; 
         }
     }
 
-
-
-    function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
-        super._burn(tokenId);
+    function getURI(uint256 _id) public view returns (string memory) {
+        return id_to_URI[_id];
     }
 
-    function tokenURI(uint256 tokenId)
-        public
-        view
-        override(ERC721, ERC721URIStorage)
-        returns (string memory)
-    {
-        return super.tokenURI(tokenId);
+    function is_nft_owner(address _address) public view returns (bool) {
+        
+        return nft_owners[_address];
     }
+
 }
 
-contract Factory {
+contract LocationFactory {
     address public owner;
     address[] private contracts;
-
     constructor() {
         owner = msg.sender;
     }
@@ -135,12 +84,14 @@ contract Factory {
         _;
     }
 
-    function createContract(uint256 amount, int256 real_x, int256 real_y) public onlyOwner {
-        address newContract = address(new YourContract(amount, real_x, real_y));
+    function addLocation(string memory name , int256 real_long, int256 real_lat, uint256 maxTokenSupply , uint256 start_timeStamp , uint256 end_timeStamp , string memory URI) public onlyOwner returns (address) {
+        
+        address newContract = address(new Location(name, real_long, real_lat, maxTokenSupply, start_timeStamp, end_timeStamp, URI));
         contracts.push(newContract);
+        return newContract;
     }
 
-    function getContracts() public view onlyOwner returns (address[] memory) {
+    function getContracts() public view returns (address[] memory) {
         return contracts;
     }
 }

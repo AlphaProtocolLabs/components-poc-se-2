@@ -1,6 +1,27 @@
 mint_contract_abi = [
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_token_supply",
+				"type": "uint256"
+			},
+			{
+				"internalType": "int256",
+				"name": "_x",
+				"type": "int256"
+			},
+			{
+				"internalType": "int256",
+				"name": "_y",
+				"type": "int256"
+			},
+			{
+				"internalType": "string",
+				"name": "URI",
+				"type": "string"
+			}
+		],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
 	},
@@ -135,6 +156,19 @@ mint_contract_abi = [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "finalTokenURI",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -170,7 +204,7 @@ mint_contract_abi = [
 						"type": "int256"
 					}
 				],
-				"internalType": "struct YourContract.coords",
+				"internalType": "struct Event.coords",
 				"name": "",
 				"type": "tuple"
 			}
@@ -204,11 +238,6 @@ mint_contract_abi = [
 	},
 	{
 		"inputs": [
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
 			{
 				"internalType": "int256",
 				"name": "real_x",
@@ -378,6 +407,19 @@ mint_contract_abi = [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "token_supply",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -419,6 +461,94 @@ mint_contract_abi = [
 				"internalType": "bool",
 				"name": "",
 				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "x",
+		"outputs": [
+			{
+				"internalType": "int256",
+				"name": "",
+				"type": "int256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "y",
+		"outputs": [
+			{
+				"internalType": "int256",
+				"name": "",
+				"type": "int256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+
+event_host_abi = [
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "int256",
+				"name": "real_x",
+				"type": "int256"
+			},
+			{
+				"internalType": "int256",
+				"name": "real_y",
+				"type": "int256"
+			},
+			{
+				"internalType": "string",
+				"name": "URI",
+				"type": "string"
+			}
+		],
+		"name": "createContract",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getContracts",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
