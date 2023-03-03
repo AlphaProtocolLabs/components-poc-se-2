@@ -9,7 +9,7 @@ import { useGeolocated } from "react-geolocated";
 // Return map bounds based on list of places
 const getMapBounds = (map, maps, places) => {
   const bounds = new maps.LatLngBounds();
-  const [currentLocation, setCurrentLocation] = useState<any>(null) 
+  const [currentLocation, setCurrentLocation] = useState<any>(null);
 
   places.forEach(place => {
     bounds.extend(new maps.LatLng(place.geometry.location.lat, place.geometry.location.lng));
@@ -43,15 +43,15 @@ function MyMapComponent({ center, zoom }: { center: google.maps.LatLngLiteral; z
 
   return <div ref={ref} id="map" />;
 }
-function Map({locatedCenter}: { locatedCenter: google.maps.LatLngLiteral; }) {
+function Map({ locatedCenter }: { locatedCenter: google.maps.LatLngLiteral }) {
   const zoom = 15;
 
-  return  (
+  return (
     <Wrapper apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY} render={render}>
       <MyMapComponent center={locatedCenter} zoom={zoom} />{" "}
     </Wrapper>
   );
-};
+}
 
 const NoLocationFoundDialog = () => {
   return (
@@ -70,21 +70,20 @@ const ErrorDialog = () => {
 };
 
 const MapView: NextPage = () => {
-  const { coords, isGeolocationAvailable, isGeolocationEnabled } =
-  useGeolocated({
-      positionOptions: {
-          enableHighAccuracy: false,
-      },
-      watchPosition: true,
-      userDecisionTimeout: 5000,
+  const { coords, isGeolocationAvailable, isGeolocationEnabled } = useGeolocated({
+    positionOptions: {
+      enableHighAccuracy: false,
+    },
+    watchPosition: true,
+    userDecisionTimeout: 5000,
   });
 
   return (
     <>
       <div className="grid lg:grid-cols-2 flex-grow" data-theme="exampleUi">
-       { !isGeolocationAvailable && (<NoLocationFoundDialog />)}
-       { !isGeolocationEnabled &&  (<NoLocationFoundDialog />)} 
-        <Map locatedCenter={ {lat: coords?.latitude, lng: coords?.longitude} }></Map>
+        {!isGeolocationAvailable && <NoLocationFoundDialog />}
+        {!isGeolocationEnabled && <NoLocationFoundDialog />}
+        <Map locatedCenter={{ lat: coords?.latitude, lng: coords?.longitude }}></Map>
       </div>
     </>
   );

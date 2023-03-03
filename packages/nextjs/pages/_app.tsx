@@ -39,7 +39,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
           <main className="relative flex flex-col flex-1">
             <Component {...pageProps} />
               <div>
-                <BottomNav name='home' />
+                <BottomNav name='home' id="navbar"/>
             </div>
           </main>
           <Footer />
