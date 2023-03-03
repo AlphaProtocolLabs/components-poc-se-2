@@ -18,7 +18,7 @@ const txObject = {
   gasPrice: web3.utils.toHex(web3.utils.toWei('10', 'gwei')),
   gasLimit: web3.utils.toHex(500000),
   to: contractAddress,
-  data: contractInstance.methods.mint(account, real_x, real_y).encodeABI()
+  data: contractInstance.methods.mint().encodeABI()
 };
 
 try {
