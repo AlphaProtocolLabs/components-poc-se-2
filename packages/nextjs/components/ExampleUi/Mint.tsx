@@ -39,9 +39,7 @@ function Mint() {
 
   return (
     <div>
-      <h1>test header</h1>
-      <p>This is the mint button</p>
-      <button onClick={handleClick}>MINT</button>
+      <button  class="rounded-full bg-pink-300 text-xl font-medium uppercase px-5" onClick={handleClick}>MINT</button>
     </div>
   );
 }
