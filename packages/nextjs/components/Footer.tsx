@@ -1,7 +1,6 @@
 import React from "react";
 import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
 import { useAppStore } from "~~/services/store/store";
-import { HeartIcon } from "@heroicons/react/24/outline";
 import { BiUser, BiGlobe, BiConversation } from "react-icons/bi";
 import SwitchTheme from "./SwitchTheme";
 import { Faucet } from "~~/components/scaffold-eth";

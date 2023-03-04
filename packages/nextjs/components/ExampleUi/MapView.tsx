@@ -39,7 +39,7 @@ function MyMapComponent({ center, zoom }: { center: google.maps.LatLngLiteral; z
     });
   });
 
-  return <div ref={ref} id="map" />;
+  return <div ref={ref} id="map"/>;
 }
 const Map = () => {
   const center = { lat: 39.771, lng: -104.979 };
@@ -47,8 +47,9 @@ const Map = () => {
 
   return (
     <Wrapper apiKey={"AIzaSyD7BALiQ3L-rupI-cyiMmE2r5DPNlI-5Tg"} render={render}>
-      <MyMapComponent center={center} zoom={zoom} />{" "}
+      <MyMapComponent center={center} zoom={zoom}  />{" "}
     </Wrapper>
+
   );
 };
 
