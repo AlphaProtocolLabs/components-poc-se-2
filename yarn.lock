@@ -2174,6 +2174,7 @@ __metadata:
     eslint-config-prettier: ^8.5.0
     eslint-plugin-prettier: ^4.2.1
     ethers: ^5.0.0
+    geolib: ^3.3.3
     graphql: ^16.6.0
     next: ^13.1.6
     nextjs-progressbar: ^0.0.16
@@ -8547,6 +8548,13 @@ __metadata:
     strip-ansi: ^6.0.1
     wide-align: ^1.1.5
   checksum: 788b6bfe52f1dd8e263cda800c26ac0ca2ff6de0b6eee2fe0d9e3abf15e149b651bd27bf5226be10e6e3edb5c4e5d5985a5a1a98137e7a892f75eff76467ad2d
+  languageName: node
+  linkType: hard
+
+"geolib@npm:^3.3.3":
+  version: 3.3.3
+  resolution: "geolib@npm:3.3.3"
+  checksum: c951a7d3503e51f5b9278ec59287c7a650590e15b43533c2361eec1d19d5424e91eae7b0dab42796f84c676bd30e052887419efea20bf29d55967f84de36426e
   languageName: node
   linkType: hard
 
