@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Modal from "../components/Modal";
-import { ContractData, ContractInteraction, BottomNav, MapView } from "~~/components/ExampleUi";
+import { ContractData, ContractInteraction, BottomNav, MapView, Mint } from "~~/components/ExampleUi";
 import { useEffect, useState, useRef, ReactElement } from "react";
 import { useRouter } from "next/router";
 import { getRouteMatcher } from "next/dist/shared/lib/router/utils/route-matcher";
@@ -40,12 +40,7 @@ const Profile: NextPage = () => {
 
           <div className="pt-5">
             <center>
-              <button
-                class="rounded-full bg-pink-300 text-xl font-medium uppercase px-5"
-                onClick={() => useRouter(true)}
-              >
-                MINT
-              </button>
+              <Mint/>
             </center>
           </div>
         </Modal>
