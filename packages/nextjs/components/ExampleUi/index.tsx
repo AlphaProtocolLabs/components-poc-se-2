@@ -4,3 +4,5 @@ export { default as MapView } from "./MapView";
 export { default as BottomNav } from "./BottomNav";
 export { default as QRScanView} from "./QRScanView";
 export { default as CameraComponent} from "./CameraComponent";
+export { default as Mint} from "./Mint";
+
