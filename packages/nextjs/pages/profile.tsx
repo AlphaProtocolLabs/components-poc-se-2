@@ -18,7 +18,7 @@ const Profile: NextPage = () => {
 
   return (
     <>
-    <div className="flex items-center">
+    <div className="flex grow items-center">
         <RainbowKitCustomConnectButton />
     </div>
     </>
