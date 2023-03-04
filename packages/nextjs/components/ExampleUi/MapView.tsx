@@ -5,7 +5,7 @@ import { useEffect, useRef, ReactElement, useState } from "react";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import Spinner from "../Spinner";
 import { GeolocatedResult, useGeolocated } from "react-geolocated";
-import { defaultPlaces }  from "./assets/DefaultPlaces";
+import { defaultPlaces } from "./assets/DefaultPlaces";
 
 // Return map bounds based on list of places
 const getMapBounds = (map, maps, places) => {
@@ -31,71 +31,68 @@ const render = (status: Status): ReactElement => {
   return <Spinner width="25" height="25" />;
 };
 
-
 function MyMapComponent({ center, zoom }: { center: google.maps.LatLngLiteral; zoom: number }) {
-  const [places, setPlaces] = useState([])
+  const [places, setPlaces] = useState([]);
   const ref = useRef();
 
   let googleMap = null;
 
   const fetchPlaces = () => {
-    setPlaces(defaultPlaces.results)
-  }
+    setPlaces(defaultPlaces.results);
+  };
   useEffect(() => {
-    
     fetchPlaces();
 
     const initGoogleMap = () => {
-        return new window.google.maps.Map(ref.current, {
-          center,
-          zoom,
+      return new window.google.maps.Map(ref.current, {
+        center,
+        zoom,
       });
-    }
+    };
 
-    const createMarker = (markerObj) => new window.google.maps.Marker({
-      position: { lat: parseFloat(markerObj.lat), lng: parseFloat(markerObj.lng) },
-      map: googleMap,
-      /*
+    const createMarker = markerObj =>
+      new window.google.maps.Marker({
+        position: { lat: parseFloat(markerObj.lat), lng: parseFloat(markerObj.lng) },
+        map: googleMap,
+        /*
       icon: {
           url: icon,
           scaledSize: new window.google.maps.Size(80, 80)
       },
       */
-    });
-    
-
+      });
 
     googleMap = initGoogleMap();
-    places.map((place) => {createMarker( { lat: place.geometry.location.lat, lng: place.geometry.location.lng})})
-
+    places.map(place => {
+      createMarker({ lat: place.geometry.location.lat, lng: place.geometry.location.lng });
+    });
   });
 
   return <div ref={ref} id="map" />;
 }
-function Map({locatedCenter}: { locatedCenter: google.maps.LatLngLiteral; }) {
-  const [currentLocation, setCurrentLocation] = useState<any>(null) 
+function Map({ locatedCenter }: { locatedCenter: google.maps.LatLngLiteral }) {
+  const [currentLocation, setCurrentLocation] = useState<any>(null);
   const zoom = 15;
 
-  const { coords, isGeolocationAvailable, isGeolocationEnabled } =
-  useGeolocated({
-      positionOptions: {
-          enableHighAccuracy: false,
-      },
-      watchPosition: true,
-      userDecisionTimeout: 5000,
-      onSuccess: (position: GeolocationPosition) => {}
+  const { coords, isGeolocationAvailable, isGeolocationEnabled } = useGeolocated({
+    positionOptions: {
+      enableHighAccuracy: false,
+    },
+    watchPosition: true,
+    userDecisionTimeout: 5000,
+    onSuccess: (position: GeolocationPosition) => {},
   });
 
-  return  (
-  <>
-   { !isGeolocationAvailable && (<NoLocationFoundDialog />)}
-   { !isGeolocationEnabled &&  (<NoLocationFoundDialog />)} 
-    <Wrapper apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY} render={render}>
-      <MyMapComponent center={ {lat: coords?.latitude, lng: coords?.longitude} } zoom={zoom} />{" "}
-    </Wrapper>
+  return (
+    <>
+      {!isGeolocationAvailable && <NoLocationFoundDialog />}
+      {!isGeolocationEnabled && <NoLocationFoundDialog />}
+      <Wrapper apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY} render={render}>
+        <MyMapComponent center={{ lat: coords?.latitude, lng: coords?.longitude }} zoom={zoom} />{" "}
+      </Wrapper>
     </>
   );
-};
+}
 
 const NoLocationFoundDialog = () => {
   return (
