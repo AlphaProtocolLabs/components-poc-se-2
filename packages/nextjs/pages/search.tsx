@@ -18,7 +18,6 @@ const Search: NextPage = () => {
     <>
       <div className="grid lg:grid-cols-2 flex-grow" data-theme="exampleUi">
           <MapView />
-          <BottomNav name='home' />
         </div>
     </>
   );

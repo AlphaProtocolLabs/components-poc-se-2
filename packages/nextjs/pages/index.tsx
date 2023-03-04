@@ -25,7 +25,7 @@ const Home: NextPage = () => {
           <p className="text-center text-lg">
             So we made it <code className="bg-base-300 text-large font-bold">FUN!</code> {" "}
             <code className="text-base text-xl font-bold">
-            <Link href="/example-ui" passHref className="link">
+            <Link href="/profile" passHref className="link">
               ENTER
             </Link>
             </code>

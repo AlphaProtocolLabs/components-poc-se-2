@@ -1,20 +1,19 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Modal from '../components/Modal'
+import Modal from "../components/Modal";
 import { ContractData, ContractInteraction, BottomNav, MapView } from "~~/components/ExampleUi";
 import { useEffect, useState, useRef, ReactElement } from "react";
 import { useRouter } from "next/router";
 import { getRouteMatcher } from "next/dist/shared/lib/router/utils/route-matcher";
 import { Spork } from "../components/ExampleUi/assets/Spork";
-import  Image  from "next/image";
-import spork from '../public/assets/Spork.png'
+import Image from "next/image";
+import spork from "../public/assets/Spork.png";
 const myLoader = ({ src, width, quality }) => {
-  return `https://example.com/${src}?w=${width}&q=${quality || 75}`
-}
+  return `https://example.com/${src}?w=${width}&q=${quality || 75}`;
+};
 
 const Profile: NextPage = () => {
   const router = useRouter();
-
 
   const isHomeActive = router.pathname === "/example-ui";
   const isSearchActive = router.pathname === "/example-ui?search";
@@ -24,22 +23,14 @@ const Profile: NextPage = () => {
 
   return (
     <>
-    <div id="modal-root">
+      <div id="modal-root">
         <button onClick={() => setShowModal(true)}>Open Modal</button>
 
-        <Modal
-            onClose={() => setShowModal(false)}
-            show={showModal}
-        >
-        <div className="pt-10">
-         <center>
-          <Image
-            src={spork}
-            alt="Spork Castle NFT"
-            width={300}
-            height={300}
-          />
-          </center>
+        <Modal onClose={() => setShowModal(false)} show={showModal}>
+          <div className="pt-10">
+            <center>
+              <Image src={spork} alt="Spork Castle NFT" width={300} height={300} />
+            </center>
           </div>
 
           <div className="pt-5">
@@ -50,13 +41,17 @@ const Profile: NextPage = () => {
 
           <div className="pt-5">
             <center>
-            <button class="rounded-full bg-pink-300 text-xl font-medium uppercase px-5" onClick={() => useRouter(true)}>MINT</button>
+              <button
+                class="rounded-full bg-pink-300 text-xl font-medium uppercase px-5"
+                onClick={() => useRouter(true)}
+              >
+                MINT
+              </button>
             </center>
-
           </div>
         </Modal>
-        <BottomNav name='Profile' />
-    </div>
+        <BottomNav name="Profile" />
+      </div>
     </>
   );
 };

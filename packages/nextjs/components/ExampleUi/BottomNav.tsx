@@ -9,23 +9,23 @@ const BottomNav = props => {
     const [activeTabs, setActiveTabs] = useState(props.name)
     useEffect(() => {
         console.log("active tabs: " + activeTabs);
-        switch (activeTabs) {
-            //case 'home':
-            //    router.push('/example-ui')
-            //    break;
-            //case 'search':
-            //    router.push('/example-ui/search')
-            //    break;
-            //case 'saved':
-            //    router.push('/example-ui/saved')
-            //    break;
-            //case 'account':
-            //    router.push('/example-ui/account')
-            //    break;
-            //default:
-            //    router.push('/example-ui')
-            //    break;
-        }
+        //switch (activeTabs) {
+        //    case 'home':
+        //        router.push('/example-ui')
+        //        break;
+        //    case 'search':
+        //        router.push('/example-ui/search')
+        //        break;
+        //    case 'saved':
+        //        router.push('/example-ui/saved')
+        //        break;
+        //    case 'account':
+        //        router.push('/example-ui/account')
+        //        break;
+        //    default:
+        //        router.push('/example-ui')
+        //        break;
+        //}
     }, [activeTabs, router])
 
     return (
@@ -51,7 +51,7 @@ const BottomNav = props => {
                         <BiAperture
                             size='35'
                             color='#000'
-                            onClick={() => setActiveTabs('search')}
+                            onClick={() => setActiveTabs('qrscan')}
                         />
                     </Link>
                         :
