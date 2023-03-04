@@ -71,7 +71,7 @@ try:
 
     # go_mint(web3, location_contract)
 
-    URI = location_contract.functions.getURI(1).call()
+    URI = location_contract.functions.getURI(0).call()
     print(URI)
 
 
