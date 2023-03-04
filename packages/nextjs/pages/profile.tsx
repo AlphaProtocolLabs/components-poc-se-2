@@ -5,9 +5,8 @@ import { ContractData, ContractInteraction, BottomNav, MapView } from "~~/compon
 import { useEffect, useState, useRef, ReactElement } from "react";
 import { useRouter } from "next/router";
 import { getRouteMatcher } from "next/dist/shared/lib/router/utils/route-matcher";
-import { Spork } from "../components/ExampleUi/assets/Spork";
 import Image from "next/image";
-import spork from "../public/assets/Spork.png";
+import spork from "../public/assets/spork.png";
 const myLoader = ({ src, width, quality }) => {
   return `https://example.com/${src}?w=${width}&q=${quality || 75}`;
 };
