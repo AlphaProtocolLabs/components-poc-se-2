@@ -1,0 +1,20 @@
+[
+  {
+    "event_name": "BuidlCamp",
+    "longitude": 1234,
+    "latitude": 1234,
+    "TokenSupply": 20,
+    "StartTimeStamp": 1677901476,
+    "EndTimeStamp": 1677987876,
+    "URI": "URI"
+  },
+  {
+    "event_name": "CryptoConference",
+    "longitude": 5678,
+    "latitude": 5678,
+    "TokenSupply": 50,
+    "StartTimeStamp": 1677987876,
+    "EndTimeStamp": 1678074276,
+    "URI": "URI"
+  }
+]
