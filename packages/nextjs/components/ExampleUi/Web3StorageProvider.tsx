@@ -31,7 +31,8 @@ const StorageProvider = ({ children }: { children: ReactNode }) => {
   const storeFiles = useCallback(
     async (file: any) => {
       if (web3storageClient) {
-        const ext = file.name.split(".").pop();
+        // const ext = file.name.split(".").pop();
+        const ext = "TESTINGNOW";
         const fileName = `${uuidv4()}.${ext}`;
         const newFile = new File([file], fileName, { type: file.type });
         const cid = await web3storageClient.put([newFile], {

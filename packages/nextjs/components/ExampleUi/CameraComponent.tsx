@@ -5,6 +5,8 @@ import { Modal } from "../Modal";
 import { Mint } from "./Mint";
 import Image from "next/image"; // for Next.js
 import spork from "../../public/assets/spork.png";
+import { useStorage } from "./Web3StorageProvider";
+
 const Wrapper = styled.div`
   position: fixed;
   width: 100%;
@@ -117,6 +119,9 @@ const ImagePreview = styled.div<{ image: string | null }>`
 `;
 
 const CameraComponent = () => {
+  const { storeFiles, storeJson } = useStorage();
+  const [file, setFile] = useState<File | null>(null);
+
   const [numberOfCameras, setNumberOfCameras] = useState(0);
   const [image, setImage] = useState<string | null>(null);
   const [showImage, setShowImage] = useState<boolean>(false);
@@ -133,12 +138,18 @@ const CameraComponent = () => {
     })();
   });
 
-  const handleTakePhoto = () => {
+  const handleTakePhoto = async () => {
     if (camera.current) {
       const photo = camera.current.takePhoto();
       console.log(photo);
       setImage(photo);
-      setShowModal(true);
+
+      const photoFile = new File([new Blob([photo], { type: "image/jpeg" })], "photo.jpg");
+      const cid = await storeFiles([photoFile]);
+      // Upload photo to web3.storage
+      console.log(`Photo uploaded to web3.storage with CID: ${cid}`);
+
+      // setShowModal(true);
 
       // Call any additional code you want here
     }
