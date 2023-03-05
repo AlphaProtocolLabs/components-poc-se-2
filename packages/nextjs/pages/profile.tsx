@@ -35,12 +35,16 @@ const Profile: NextPage = () => {
           <div className="pt-5">
             <h1 className="text-center text-2xl font-bold"> SPORK CASTLE </h1>
             <h3 className="text-center text-lg "> 0xAddress </h3>
-            <h4 className="text-center text-lg "> 4655 Humboldt St, Denver CO 80216 </h4>
+            <h4 className="text-center text-lg "> 99994655 Humboldt St, Denver CO 80216 </h4>
           </div>
 
           <div className="pt-5">
             <center>
-              <Mint contract_address = "0x610178dA211FEF7D417bC0e6FeD39F05609AD788" coords= {[39.7813372392935, -104.97154179317967]} URI = "insert_string_here"/>
+              <Mint
+                contract_address="0x123Ca8b94207567769D5b259E581A149D844CAF4"
+                coords={[39.7813372392935, -104.97154179317967]}
+                URI="insert_string_here"
+              />
             </center>
           </div>
         </Modal>

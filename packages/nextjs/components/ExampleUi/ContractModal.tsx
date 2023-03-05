@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, ReactElement, useState } from "react";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import Spinner from "../Spinner";
@@ -7,32 +6,26 @@ import Mint from "./Mint";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import spork from "../../public/assets/spork.png";
-import buidlhub from "../../public/assets/buidlhub.png"
+import buidlhub from "../../public/assets/buidlhub.png";
 
-function ContractModal({toggleShowModal, 
-                        places,
-                        placeId
-                      }: 
-  ({toggleShowModal: Function;
+function ContractModal({
+  toggleShowModal,
+  places,
+  placeId,
+}: {
+  toggleShowModal: Function;
   places: Array<Object>;
   placeId: Number;
-}
-  )) {
-    
-    if (places != null && placeId != null) {
-    let place = places[placeId]
+}) {
+  if (places != null && placeId != null) {
+    let place = places[placeId];
     return (
-
       <div id="modal-root">
         <Modal onClose={() => toggleShowModal(null)} show={toggleShowModal} title="root">
           <div className="pt-10">
             <center>
-              { placeId == 0 &&
-              <Image src={spork} alt={name + " NFT"} width={300} height={300} />
-              }
-              { placeId == 1 && 
-              <Image src={buidlhub} alt={name + " NFT"} width={300} height={300} />
-              }
+              {placeId == 0 && <Image src={spork} alt={name + " NFT"} width={300} height={300} />}
+              {placeId == 1 && <Image src={buidlhub} alt={name + " NFT"} width={300} height={300} />}
             </center>
           </div>
 
@@ -43,13 +36,13 @@ function ContractModal({toggleShowModal,
           </div>
 
           <div className="pt-5">
-          <center>
-              <Mint contract_address={place.contract_address} URI="insert_string_here"/>
-          </center>
+            <center>
+              <Mint contract_address={place.contract_address} URI="insert_string_here" />
+            </center>
           </div>
         </Modal>
       </div>
     );
-    }
+  }
 }
 export default ContractModal;
