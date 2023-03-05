@@ -32,7 +32,14 @@ const render = (status: Status): ReactElement => {
   return <Spinner width="25" height="25" />;
 };
 
-function MyMapComponent({ googleMap, center, zoom, toggleMarkerModal }: { googleMap: google.maps.Map; center: google.maps.LatLngLiteral; zoom: number; toggleMarkerModal: Function; }) {
+function MyMapComponent({ googleMap, center, zoom, infoWindow, toggleMarkerModal, handleLocationError }: 
+  { googleMap: google.maps.Map; 
+    center: google.maps.LatLngLiteral; 
+    zoom: number; 
+    infoWindow: google.maps.InfoWindow;
+    toggleMarkerModal: Function;
+    handleLocationError: Function;
+     }) {
   const [places, setPlaces] = useState([]);
   const ref = useRef();
   
@@ -45,11 +52,55 @@ function MyMapComponent({ googleMap, center, zoom, toggleMarkerModal }: { google
     fetchPlaces();
 
     const initGoogleMap = () => {
-      return new window.google.maps.Map(ref.current, {
+      let map = new window.google.maps.Map(ref.current, {
         center,
         zoom,
       });
-    };
+      const locationButton = document.createElement("button");
+
+      locationButton.textContent = "Pan to Current Location";
+      locationButton.style = " background-color: #fff; \
+        border: 0; \
+        border-radius: 2px; \
+        box-shadow: 0 1px 4px -1px #0000004d; \
+        cursor: pointer; \
+        font: 400 18px Roboto,Arial,sans-serif; \
+        height: 40px; \
+        margin: 10px; \
+        overflow: hidden; \
+        padding: 0 .5em; "
+      locationButton.classList.add("custom-map-control-button");
+    
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+
+      infoWindow = new google.maps.InfoWindow();
+
+    
+      locationButton.addEventListener("click", () => {
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position: GeolocationPosition) => {
+              const pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              };
+    
+              googleMap.setCenter(pos);
+            },
+            () => {
+              handleLocationError(true, infoWindow, map.getCenter()!);
+            }
+          );
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter()!);
+        }
+      });
+      return map;
+    }
+    
+    
 
     const createMarker = markerObj => {
       let marker = new window.google.maps.Marker({
@@ -84,7 +135,13 @@ function Map({ locatedCenter }: { locatedCenter: google.maps.LatLngLiteral }) {
   const [currentLocation, setCurrentLocation] = useState<any>(null);
   const zoom = 15;
   let googleMap = null;
+  var infoWindow = null;
+  const setInfoWindow = function (newInfoWindow) {
+    infoWindow = newInfoWindow; 
+  }
   const [showModal, setShowModal] = useState(false);
+  const [ gpsError, setGpsError] = useState(false);
+  const [ browserError, setBrowserError ] = useState(false);
 
   const { coords, isGeolocationAvailable, isGeolocationEnabled, getPosition } = useGeolocated({
     positionOptions: {
@@ -101,13 +158,25 @@ function Map({ locatedCenter }: { locatedCenter: google.maps.LatLngLiteral }) {
     setShowModal(!showModal)
   };
 
-  const checkLocationForMint = () => {
-    let position = getPosition()
-  }
-
-  return (
+    const handleLocationError = function (
+      browserHasGeolocation: boolean,
+      infoWindow: google.maps.InfoWindow,
+      pos: google.maps.LatLng
+    ) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(
+        browserHasGeolocation
+          ? "Error: The Geolocation service failed."
+          : "Error: Your browser doesn't support geolocation."
+      );
+      infoWindow.open(googleMap);
+    
+    }
+    return (
     <>
-    { showModal && <ContractModal toggleShowModal={toggleMarkerModal}/> }
+    { showModal && <ContractModal 
+        toggleShowModal={toggleMarkerModal}
+        /> }
       {!isGeolocationAvailable && <NoLocationFoundDialog />}
       {!isGeolocationEnabled && <NoLocationFoundDialog />}
       { !showModal && (
@@ -116,7 +185,9 @@ function Map({ locatedCenter }: { locatedCenter: google.maps.LatLngLiteral }) {
             center={{ lat: coords?.latitude, lng: coords?.longitude }} 
             zoom={zoom} 
             googleMap={googleMap} 
+            infoWindow={infoWindow}
             toggleMarkerModal={toggleMarkerModal}
+            handleLocationError={handleLocationError}
           />{" "}
         </Wrapper>
       )
