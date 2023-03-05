@@ -1,8 +1,10 @@
+import { useEffect, useRef, ReactElement, useState } from "react";
 import React from "react";
 import Web3 from "web3";
-import mint_contract_abi from "../../../mint_contract_abi.json";
+import mint_contract_abi from "../../public/assets/mint_contract_abi.json";
 
 function Mint(props) {
+  const [closeEnough, setCloseEnough] = useState(null);
   const handleClick = async () => {
     const options = {
       enableHighAccuracy: true,
@@ -69,16 +71,16 @@ function Mint(props) {
         console.log("Not close enough to redeem, sorry!");
       }
     }
-
     const result = navigator.geolocation.getCurrentPosition(success, error, options);
   };
 
   return (
     <>
       <div>
-        <button class="rounded-full bg-pink-300 text-xl font-medium uppercase px-5" onClick={handleClick}>
+        <button className="rounded-full bg-pink-300 text-xl font-medium uppercase px-5" onClick={handleClick}>
           MINT
         </button>
+        {closeEnough != null && !closeEnough && <p>Not close eough to redeem, sorry</p>}
       </div>
     </>
   );

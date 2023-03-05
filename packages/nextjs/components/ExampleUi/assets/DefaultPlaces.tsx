@@ -1,7 +1,8 @@
 export const defaultPlaces = {
   results: [
     {
-      formatted_address: "",
+      formatted_address: "4655 Humboldt St, Denver CO 80216",
+      contract_address: "0x9db66840cB89Daf3063c3d0eB83831c87676E128",
       geometry: {
         location: {
           lat: 39.7815579153035,
@@ -19,8 +20,8 @@ export const defaultPlaces = {
         },
       },
       icon: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
-      id: "1113d3dd7339f965caae39387dd808a9e877bc2e",
-      name: "Flore Vegan",
+      id: 0,
+      name: "Spork Castle",
       opening_hours: {
         open_now: false,
         weekday_text: [],
@@ -41,11 +42,19 @@ export const defaultPlaces = {
       rating: 4.6,
       types: ["restaurant", "food", "point_of_interest", "establishment"],
     },
+    {
+      id: 1,
+      name: "BUIDLHub",
+      formatted_address: "3403 Brighton Blvd, Denver, CO 80216",
+      contract_address: "0x333423DdAad62Fa13C113B7747a6cac605f45423",
+      geometry: {
+        location: {
+            lat: 39.76976772652145,
+            lng: -104.97990631955899
+        }
+      }
+    }
   ],
-  contract_address: {
-    SporkCastle_contract_address: "0x9db66840cB89Daf3063c3d0eB83831c87676E128",
-    EthDenverHub_contract_address: "0x333423DdAad62Fa13C113B7747a6cac605f45423",
-  },
 };
 //Longitude and latidude must be divided by 10^18
 //0x9db66840cB89Daf3063c3d0eB83831c87676E128

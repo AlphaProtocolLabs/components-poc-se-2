@@ -6,29 +6,43 @@ import Mint from "./Mint";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import spork from "../../public/assets/spork.png";
-function ContractModal({ toggleShowModal }: { toggleShowModal: Function }) {
-  return (
-    <div id="modal-root">
-      <Modal onClose={() => toggleShowModal()} show={toggleShowModal} title="root">
-        <div className="pt-10">
-          <center>
-            <Image src={spork} alt="Spork Castle NFT" width={300} height={300} />
-          </center>
-        </div>
+import buidlhub from "../../public/assets/buidlhub.png";
 
-        <div className="pt-5">
-          <h1 className="text-center text-2xl font-bold"> SPORK CASTLE </h1>
-          <h3 className="text-center text-lg "> 0xAddress </h3>
-          <h4 className="text-center text-lg "> 4655 Humboldt St, Denver CO 80216 </h4>
-        </div>
+function ContractModal({
+  toggleShowModal,
+  places,
+  placeId,
+}: {
+  toggleShowModal: Function;
+  places: Array<Object>;
+  placeId: Number;
+}) {
+  if (places != null && placeId != null) {
+    let place = places[placeId];
+    return (
+      <div id="modal-root">
+        <Modal onClose={() => toggleShowModal(null)} show={toggleShowModal} title="root">
+          <div className="pt-10">
+            <center>
+              {placeId == 0 && <Image src={spork} alt={name + " NFT"} width={300} height={300} />}
+              {placeId == 1 && <Image src={buidlhub} alt={name + " NFT"} width={300} height={300} />}
+            </center>
+          </div>
 
-        <div className="pt-5">
-          <center>
-            <Mint contract_address="0x123Ca8b94207567769D5b259E581A149D844CAF4" URI="insert_string_here" />
-          </center>
-        </div>
-      </Modal>
-    </div>
-  );
+          <div className="pt-5">
+            <h1 className="text-center text-2xl font-bold"> {place.name}</h1>
+            <h3 className="text-center text-lg "> {place.contract_address} </h3>
+            <h4 className="text-center text-lg "> {place.formatted_address} </h4>
+          </div>
+
+          <div className="pt-5">
+            <center>
+              <Mint contract_address={place.contract_address} URI="insert_string_here" />
+            </center>
+          </div>
+        </Modal>
+      </div>
+    );
+  }
 }
 export default ContractModal;
