@@ -46,7 +46,7 @@ function Mint(props) {
       console.log(crd.latitude);
       console.log("------------");
 
-      if (x_diff < 450 && y_diff < 450) {
+      if (x_diff < 900 && y_diff < 900) {
         // Set up account for signing with metamask
         const accounts = await web3.eth.getAccounts();
         const account = accounts[0];
