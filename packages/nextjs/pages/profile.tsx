@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Modal from "../components/Modal";
-import { ContractData, ContractInteraction, BottomNav, MapView } from "~~/components/ExampleUi";
+import { ContractData, ContractInteraction, BottomNav, MapView, Mint } from "~~/components/ExampleUi";
 import { useEffect, useState, useRef, ReactElement } from "react";
 import { useRouter } from "next/router";
 import { getRouteMatcher } from "next/dist/shared/lib/router/utils/route-matcher";
@@ -25,7 +25,7 @@ const Profile: NextPage = () => {
       <div id="modal-root">
         <button onClick={() => setShowModal(true)}>Open Modal</button>
 
-        <Modal onClose={() => setShowModal(false)} show={showModal}>
+        <Modal onClose={() => setShowModal(false)} show={showModal} title="root">
           <div className="pt-10">
             <center>
               <Image src={spork} alt="Spork Castle NFT" width={300} height={300} />
@@ -40,12 +40,7 @@ const Profile: NextPage = () => {
 
           <div className="pt-5">
             <center>
-              <button
-                class="rounded-full bg-pink-300 text-xl font-medium uppercase px-5"
-                onClick={() => useRouter(true)}
-              >
-                MINT
-              </button>
+              <Mint contract_address = "0x610178dA211FEF7D417bC0e6FeD39F05609AD788" coords= {[39.7813372392935, -104.97154179317967]} URI = "insert_string_here"/>
             </center>
           </div>
         </Modal>

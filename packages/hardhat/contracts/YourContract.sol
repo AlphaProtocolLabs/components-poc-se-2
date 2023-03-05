@@ -14,7 +14,8 @@ contract Location is ERC721{
     int256 public longitude;
     int256 public latitude;
 
-    uint256 private tokenID = 0; 
+    //TODO make public attribute 
+    uint256 public tokenID = 0; 
     string public location_URI;
     
     string public location_name;
