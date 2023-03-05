@@ -1,8 +1,10 @@
+import { useEffect, useRef, ReactElement, useState } from "react";
 import React from "react";
 import Web3 from "web3";
-import mint_contract_abi from "../../../mint_contract_abi.json";
+import mint_contract_abi from "../../public/assets/mint_contract_abi.json";
 
 function Mint(props) {
+  const [closeEnough, setCloseEnough] = useState(null);
   const handleClick = async () => {
     
 
@@ -44,6 +46,7 @@ function Mint(props) {
   
     if ( x_diff < 450 && y_diff < 450 )
     {
+      setCloseEnough(true)
     // Set up account for signing with metamask
     const accounts = await web3.eth.getAccounts();
     const account = accounts[0];
@@ -69,6 +72,7 @@ function Mint(props) {
   }
   else
   {
+    setCloseEnough(false)
     console.log("Not close enough to redeem, sorry!");
   }
     }
@@ -82,9 +86,10 @@ function Mint(props) {
   return (
     <>
       <div>
-        <button class="rounded-full bg-pink-300 text-xl font-medium uppercase px-5" onClick={handleClick}>
+        <button className="rounded-full bg-pink-300 text-xl font-medium uppercase px-5" onClick={handleClick}>
           MINT
         </button>
+        { closeEnough != null && !closeEnough && <p>Not close eough to redeem, sorry</p>}
       </div>
     </>
   );

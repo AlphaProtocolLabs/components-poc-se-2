@@ -1,4 +1,3 @@
-import BottomNav from "../components/BottomNav"
 
 const Saved = () => {
     return (
