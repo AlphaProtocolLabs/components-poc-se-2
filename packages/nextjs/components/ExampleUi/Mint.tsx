@@ -16,6 +16,14 @@ function Mint(props) {
     // Create contract instance
     const contractInstance = new web3.eth.Contract(mint_contract_abi, contractAddress);
 
+    const coords = await contractInstance.methods.getCoords().call()
+    console.log(props.coords)
+    console.log(coords)
+    const x_diff =Math.abs(parseInt(props.coords[0]*1000000) - coords[0])
+    const y_diff = Math.abs(parseInt(props.coords[1]*1000000) - coords[1])
+  
+    if ( x_diff < 450 && y_diff < 450 )
+    {
     // Set up account for signing with metamask
     const accounts = await web3.eth.getAccounts();
     const account = accounts[0];
@@ -39,6 +47,11 @@ function Mint(props) {
     } catch (error) {
       console.error(error);
     }
+  }
+  else
+  {
+    console.log("Not close enough to redeem, sorry!");
+  }
   };
 
   return (
