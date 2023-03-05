@@ -284,6 +284,13 @@ mumbai_location_abi = [
         "type": "function",
     },
     {
+        "inputs": [],
+        "name": "tokenID",
+        "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+        "stateMutability": "view",
+        "type": "function",
+    },
+    {
         "inputs": [{"internalType": "uint256", "name": "tokenId", "type": "uint256"}],
         "name": "tokenURI",
         "outputs": [{"internalType": "string", "name": "", "type": "string"}],

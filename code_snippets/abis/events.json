@@ -1,20 +1,20 @@
 [
   {
-    "event_name": "BuidlCamp",
-    "longitude": 1234,
-    "latitude": 1234,
+    "event_name": "SporkCastle",
+    "longitude": 39781337239293500000,
+    "latitude": -104971541793179670000,
     "TokenSupply": 20,
-    "StartTimeStamp": 1677901476,
-    "EndTimeStamp": 1677987876,
-    "URI": "URI"
+    "StartTimeStamp": 1677983228,
+    "EndTimeStamp": 1678156030,
+    "URI": "https://bafybeiglr7zz2nhn6xmx7qhsnmvp5n56cs64rnyr56gvcmbmhpjex243oy.ipfs.w3s.link/spork.png"
   },
   {
-    "event_name": "CryptoConference",
-    "longitude": 5678,
-    "latitude": 5678,
+    "event_name": "EthDenverHub",
+    "longitude": 39769767726521450000,
+    "latitude": -104979906319558990000,
     "TokenSupply": 50,
-    "StartTimeStamp": 1677987876,
-    "EndTimeStamp": 1678074276,
-    "URI": "URI"
+    "StartTimeStamp": 1677983228,
+    "EndTimeStamp": 1678156030,
+    "URI": "https://bafybeighvvlaf65u2w3r367dccpyt6xeyntosqf5az7odrghi25ed32wgq.ipfs.w3s.link/hub.png"
   }
 ]
