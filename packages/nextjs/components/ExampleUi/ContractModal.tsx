@@ -3,7 +3,7 @@ import { useEffect, useRef, ReactElement, useState } from "react";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import Spinner from "../Spinner";
 import Modal from "../Modal";
-
+import Mint from "./Mint";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import spork from "../../public/assets/spork.png";
@@ -26,14 +26,9 @@ function ContractModal({toggleShowModal}: {toggleShowModal: Function}) {
           </div>
 
           <div className="pt-5">
-            <center>
-              <button
-                class="rounded-full bg-pink-300 text-xl font-medium uppercase px-5"
-                onClick={() => useRouter(true)}
-              >
-                MINT
-              </button>
-            </center>
+          <center>
+              <Mint contract_address = "0x610178dA211FEF7D417bC0e6FeD39F05609AD788" URI = "insert_string_here"/>
+          </center>
           </div>
         </Modal>
       </div>
