@@ -15,7 +15,7 @@ WALLET_ADDRESS = os.environ.get("DEPLOYER_WALLET_ADDRESS")
 Alchemy_key = os.environ.get("ALCHEMY_API_KEY")
 
 _abi = abis.mumbai_location_abi
-location_contract_address = 0x59BC1C10D9515AFD5F4D520CD22B3073FBE878AB
+location_contract_address = 0x123CA8B94207567769D5B259E581A149D844CAF4
 
 rpc_endpoint = f"https://polygon-mumbai.g.alchemy.com/v2/{Alchemy_key}"
 ws_endpoint = ""
