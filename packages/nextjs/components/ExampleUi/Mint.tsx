@@ -5,7 +5,25 @@ import mint_contract_abi from '../../../mint_contract_abi.json';
 function Mint(props) {
   const handleClick = async () => {
     
-    var web3 = new Web3(Web3.givenProvider)
+
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    };
+
+    function error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+    
+    async function success(pos) {
+      const crd = pos.coords;
+    
+      console.log("Your current position is:");
+      console.log(`Latitude : ${crd.latitude}`);
+      console.log(`Longitude: ${crd.longitude}`);
+      console.log(`More or less ${crd.accuracy} meters.`);
+      var web3 = new Web3(Web3.givenProvider)
 
     //if(props.coords[0] )
 
@@ -19,8 +37,10 @@ function Mint(props) {
     const coords = await contractInstance.methods.getCoords().call()
     console.log(props.coords)
     console.log(coords)
-    const x_diff =Math.abs(parseInt(props.coords[0]*1000000) - coords[0])
-    const y_diff = Math.abs(parseInt(props.coords[1]*1000000) - coords[1])
+    const x_diff =Math.abs(parseInt(crd.latitude*1000000) - coords[0])
+    const y_diff = Math.abs(parseInt(crd.longitude*1000000) - coords[1])
+    console.log(x_diff)
+    console.log(y_diff)
   
     if ( x_diff < 450 && y_diff < 450 )
     {
@@ -52,6 +72,12 @@ function Mint(props) {
   {
     console.log("Not close enough to redeem, sorry!");
   }
+    }
+    
+    const result = navigator.geolocation.getCurrentPosition(success, error, options);
+
+    
+    
   };
 
   return (
