@@ -3,11 +3,12 @@ pragma solidity ^0.8.17;
 
 // Useful for debugging. Remove when deploying to a live network.
 import "hardhat/console.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-contract Location is ERC721{
+contract Location is ERC721, ERC721URIStorage{
 // 39.784133, -104.973355
 //truncate numbers to 6 decimal places only
 
@@ -25,7 +26,6 @@ contract Location is ERC721{
     uint256 public end_timeStamp;
 
     mapping(address => bool) public nft_owners;
-    mapping(uint256 => string) public id_to_URI;
     
     
     constructor(string memory _name ,int256 _longitude, int256 _latitude, uint256 _token_supply, uint256 _start_timeStamp , uint256 _end_timeStamp, string memory _URI) ERC721("Location", "LOC") {
@@ -56,20 +56,30 @@ contract Location is ERC721{
         if(nft_owners[msg.sender] == false && time > start_timeStamp && time < end_timeStamp && tokenID < max_token_supply)
         {
             _mint(msg.sender, tokenID);
-            id_to_URI[tokenID] = _URI;
+            _setTokenURI(tokenID, _URI);
             nft_owners[msg.sender] = true;
             tokenID = tokenID + 1 ; 
         }
     }
 
-    function getURI(uint256 _id) public view returns (string memory) {
-        return id_to_URI[_id];
-    }
 
     function is_nft_owner(address _address) public view returns (bool) {
         
         return nft_owners[_address];
     }
+
+    function _burn(uint256 _tokenId) internal override(ERC721, ERC721URIStorage) {
+        super._burn(_tokenId);
+    }
+
+    function tokenURI(uint256 tokenId)
+         public
+         view
+         override(ERC721, ERC721URIStorage)
+         returns (string memory)
+     {
+         return super.tokenURI(tokenId);
+     }
 
 }
 
