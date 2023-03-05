@@ -107,14 +107,17 @@ function Map({ locatedCenter }: { locatedCenter: google.maps.LatLngLiteral }) {
     { showModal && <ContractModal toggleShowModal={toggleMarkerModal}/> }
       {!isGeolocationAvailable && <NoLocationFoundDialog />}
       {!isGeolocationEnabled && <NoLocationFoundDialog />}
-      <Wrapper apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY} render={render}>
-        <MyMapComponent 
-          center={{ lat: coords?.latitude, lng: coords?.longitude }} 
-          zoom={zoom} 
-          googleMap={googleMap} 
-          toggleMarkerModal={toggleMarkerModal}
-        />{" "}
-      </Wrapper>
+      { !showModal && (
+        <Wrapper apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY} render={render}>
+          <MyMapComponent 
+            center={{ lat: coords?.latitude, lng: coords?.longitude }} 
+            zoom={zoom} 
+            googleMap={googleMap} 
+            toggleMarkerModal={toggleMarkerModal}
+          />{" "}
+        </Wrapper>
+      )
+      }
     </>
   );
 }
