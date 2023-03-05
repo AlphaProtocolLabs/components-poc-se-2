@@ -25,7 +25,7 @@ const Profile: NextPage = () => {
       <div id="modal-root">
         <button onClick={() => setShowModal(true)}>Open Modal</button>
 
-        <Modal onClose={() => setShowModal(false)} show={showModal}>
+        <Modal onClose={() => setShowModal(false)} show={showModal} title="root">
           <div className="pt-10">
             <center>
               <Image src={spork} alt="Spork Castle NFT" width={300} height={300} />

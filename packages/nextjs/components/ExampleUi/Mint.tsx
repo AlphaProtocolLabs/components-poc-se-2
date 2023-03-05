@@ -1,6 +1,6 @@
-import React from 'react';
-import Web3 from 'web3';
-import mint_contract_abi from '../../../mint_contract_abi.json';
+import React from "react";
+import Web3 from "web3";
+import mint_contract_abi from "../../../mint_contract_abi.json";
 
 function Mint(props) {
   const handleClick = async () => {
@@ -51,7 +51,7 @@ function Mint(props) {
     // Create transaction object
     const txObject = {
       from: account,
-      gasPrice: web3.utils.toHex(web3.utils.toWei('300', 'gwei')),
+      gasPrice: web3.utils.toHex(web3.utils.toWei("300", "gwei")),
       gasLimit: web3.utils.toHex(500000),
       to: contractAddress,
       data: contractInstance.methods.mint(
@@ -80,10 +80,14 @@ function Mint(props) {
   };
 
   return (
-    <div>
-      <button  class="rounded-full bg-pink-300 text-xl font-medium uppercase px-5" onClick={handleClick}>MINT</button>
-    </div>
+    <>
+      <div>
+        <button class="rounded-full bg-pink-300 text-xl font-medium uppercase px-5" onClick={handleClick}>
+          MINT
+        </button>
+      </div>
+    </>
   );
-}
+};
 
 export default Mint;

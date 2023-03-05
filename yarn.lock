@@ -3111,6 +3111,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/uuid@npm:^9":
+  version: 9.0.1
+  resolution: "@types/uuid@npm:9.0.1"
+  checksum: c472b8a77cbeded4bc529220b8611afa39bd64677f507838f8083d8aac8033b1f88cb9ddaa2f8589e0dcd2317291d0f6e1379f82d5ceebd6f74f3b4825288e00
+  languageName: node
+  linkType: hard
+
 "@types/webrtc@npm:0.0.25":
   version: 0.0.25
   resolution: "@types/webrtc@npm:0.0.25"
@@ -14652,11 +14659,14 @@ __metadata:
   dependencies:
     "@types/google.maps": ^3.52.0
     "@types/styled-components": ^5
+    "@types/uuid": ^9
     husky: ^8.0.1
     lint-staged: ^13.0.3
     react: ^18.2.0
     react-camera-pro: ^1.2.2
     styled-components: ^5.3.8
+    uuid: ^9.0.0
+    web3.storage: ^4.5.4
   languageName: unknown
   linkType: soft
 
