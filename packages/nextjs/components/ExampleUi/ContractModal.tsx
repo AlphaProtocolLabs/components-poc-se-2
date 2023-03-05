@@ -7,6 +7,8 @@ import Mint from "./Mint";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import spork from "../../public/assets/spork.png";
+import buidlhub from "../../public/assets/buidlhub.png"
+
 function ContractModal({toggleShowModal, 
                         places,
                         placeId
@@ -25,7 +27,12 @@ function ContractModal({toggleShowModal,
         <Modal onClose={() => toggleShowModal(null)} show={toggleShowModal} title="root">
           <div className="pt-10">
             <center>
-              <Image src={spork} alt={name + "NFT"} width={300} height={300} />
+              { placeId == 0 &&
+              <Image src={spork} alt={name + " NFT"} width={300} height={300} />
+              }
+              { placeId == 1 && 
+              <Image src={buidlhub} alt={name + " NFT"} width={300} height={300} />
+              }
             </center>
           </div>
 

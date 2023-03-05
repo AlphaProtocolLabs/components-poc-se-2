@@ -45,7 +45,7 @@ export const defaultPlaces = {
     {
       id: 1,
       name: "BUIDLHub",
-      formatted_address: "4655 Humboldt St, Denver CO 80216",
+      formatted_address: "3403 Brighton Blvd, Denver, CO 80216",
       contract_address: "0x333423DdAad62Fa13C113B7747a6cac605f45423",
       geometry: {
         location: {
