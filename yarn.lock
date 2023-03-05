@@ -12303,7 +12303,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nan@npm:^2.14.0, nan@npm:^2.17.0":
+"nan@npm:2.15.0":
+  version: 2.15.0
+  resolution: "nan@npm:2.15.0"
+  dependencies:
+    node-gyp: latest
+  checksum: 33e1bb4dfca447fe37d4bb5889be55de154828632c8d38646db67293a21afd61ed9909cdf1b886214a64707d935926c4e60e2b09de9edfc2ad58de31d6ce8f39
+  languageName: node
+  linkType: hard
+
+"nan@npm:^2.14.0":
   version: 2.17.0
   resolution: "nan@npm:2.17.0"
   dependencies:
@@ -14662,7 +14671,7 @@ __metadata:
     "@types/uuid": ^9
     husky: ^8.0.1
     lint-staged: ^13.0.3
-    nan: ^2.17.0
+    nan: 2.15.0
     react: ^18.2.0
     react-camera-pro: ^1.2.2
     styled-components: ^5.3.8
