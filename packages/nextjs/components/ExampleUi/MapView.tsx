@@ -86,11 +86,11 @@ function Map({ locatedCenter }: { locatedCenter: google.maps.LatLngLiteral }) {
   let googleMap = null;
   const [showModal, setShowModal] = useState(false);
 
-  const { coords, isGeolocationAvailable, isGeolocationEnabled } = useGeolocated({
+  const { coords, isGeolocationAvailable, isGeolocationEnabled, getPosition } = useGeolocated({
     positionOptions: {
       enableHighAccuracy: false,
     },
-    watchPosition: true,
+    watchPosition: false,
     userDecisionTimeout: 5000,
     onSuccess: (position: GeolocationPosition) => {
       console.log(position);
@@ -101,6 +101,9 @@ function Map({ locatedCenter }: { locatedCenter: google.maps.LatLngLiteral }) {
     setShowModal(!showModal)
   };
 
+  const checkLocationForMint = () => {
+    let position = getPosition()
+  }
 
   return (
     <>
