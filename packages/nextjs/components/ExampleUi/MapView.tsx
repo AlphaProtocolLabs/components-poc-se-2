@@ -6,6 +6,7 @@ import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import Spinner from "../Spinner";
 import { GeolocatedResult, useGeolocated } from "react-geolocated";
 import { defaultPlaces } from "./assets/DefaultPlaces";
+import ContractModal  from "./ContractModal"
 
 // Return map bounds based on list of places
 const getMapBounds = (map, maps, places) => {
@@ -31,11 +32,11 @@ const render = (status: Status): ReactElement => {
   return <Spinner width="25" height="25" />;
 };
 
-function MyMapComponent({ center, zoom }: { center: google.maps.LatLngLiteral; zoom: number }) {
+function MyMapComponent({ googleMap, center, zoom, toggleMarkerModal }: { googleMap: google.maps.Map; center: google.maps.LatLngLiteral; zoom: number; toggleMarkerModal: Function; }) {
   const [places, setPlaces] = useState([]);
   const ref = useRef();
+  
 
-  let googleMap = null;
 
   const fetchPlaces = () => {
     setPlaces(defaultPlaces.results);
@@ -50,10 +51,12 @@ function MyMapComponent({ center, zoom }: { center: google.maps.LatLngLiteral; z
       });
     };
 
-    const createMarker = markerObj =>
-      new window.google.maps.Marker({
+    const createMarker = markerObj => {
+      let marker = new window.google.maps.Marker({
         position: { lat: parseFloat(markerObj.lat), lng: parseFloat(markerObj.lng) },
         map: googleMap,
+        clickable: true,
+
         /*
       icon: {
           url: icon,
@@ -61,6 +64,13 @@ function MyMapComponent({ center, zoom }: { center: google.maps.LatLngLiteral; z
       },
       */
       });
+      
+      google.maps.event.addListener(
+        marker,
+        "click",
+        () => toggleMarkerModal()
+      )
+    }
 
     googleMap = initGoogleMap();
     places.map(place => {
@@ -73,6 +83,8 @@ function MyMapComponent({ center, zoom }: { center: google.maps.LatLngLiteral; z
 function Map({ locatedCenter }: { locatedCenter: google.maps.LatLngLiteral }) {
   const [currentLocation, setCurrentLocation] = useState<any>(null);
   const zoom = 15;
+  let googleMap = null;
+  const [showModal, setShowModal] = useState(false);
 
   const { coords, isGeolocationAvailable, isGeolocationEnabled } = useGeolocated({
     positionOptions: {
@@ -80,15 +92,28 @@ function Map({ locatedCenter }: { locatedCenter: google.maps.LatLngLiteral }) {
     },
     watchPosition: true,
     userDecisionTimeout: 5000,
-    onSuccess: (position: GeolocationPosition) => {},
+    onSuccess: (position: GeolocationPosition) => {
+      console.log(position);
+      googleMap?.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude})},
   });
+  
+  const toggleMarkerModal = () => {
+    setShowModal(!showModal)
+  };
+
 
   return (
     <>
+    { showModal && <ContractModal toggleShowModal={toggleMarkerModal}/> }
       {!isGeolocationAvailable && <NoLocationFoundDialog />}
       {!isGeolocationEnabled && <NoLocationFoundDialog />}
       <Wrapper apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY} render={render}>
-        <MyMapComponent center={{ lat: coords?.latitude, lng: coords?.longitude }} zoom={zoom} />{" "}
+        <MyMapComponent 
+          center={{ lat: coords?.latitude, lng: coords?.longitude }} 
+          zoom={zoom} 
+          googleMap={googleMap} 
+          toggleMarkerModal={toggleMarkerModal}
+        />{" "}
       </Wrapper>
     </>
   );
