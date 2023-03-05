@@ -40,7 +40,7 @@ const Profile: NextPage = () => {
 
           <div className="pt-5">
             <center>
-              <Mint />
+              <Mint contract_address = "0x610178dA211FEF7D417bC0e6FeD39F05609AD788" coords= {[39.7813372392935, -104.97154179317967]} URI = "insert_string_here"/>
             </center>
           </div>
         </Modal>
