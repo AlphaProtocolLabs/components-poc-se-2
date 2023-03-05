@@ -143,14 +143,13 @@ const CameraComponent = () => {
       const photo = camera.current.takePhoto();
       setImage(photo);
 
+      setShowModal(true);
       const blob = await (await fetch(photo)).blob();
       const photoFile = new File([blob], "photo.jpg");
 
       const URI = await storeFiles(photoFile);
       // Upload photo to web3.storage
       console.log(`Photo uploaded to web3.storage with CID: ${URI}`);
-
-      setShowModal(true);
 
       // Call any additional code you want here
     }
