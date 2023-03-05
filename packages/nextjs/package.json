@@ -10,8 +10,8 @@
     "lint": "next lint",
     "format": "prettier --write . '!(node_module|.next|contracts)/**/*'",
     "check-types": "tsc --noEmit --incremental",
-    "vercel": "vercel",
-    "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true"
+    "vercel": "vercel --build-env NODE_OPTIONS=--openssl-legacy-provider",
+    "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true --build-env NODE_OPTIONS=--openssl-legacy-provider"
   },
   "dependencies": {
     "@apollo/client": "^3.7.9",
