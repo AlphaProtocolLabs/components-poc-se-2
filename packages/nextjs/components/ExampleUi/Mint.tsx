@@ -2,13 +2,17 @@ import React from 'react';
 import Web3 from 'web3';
 import mint_contract_abi from '../../../mint_contract_abi.json';
 
-function Mint() {
+function Mint(props) {
   const handleClick = async () => {
-    // this needs actual contract addy
     
     var web3 = new Web3(Web3.givenProvider)
 
-    const contractAddress = "0x0165878A594ca255338adfa4d48449f69242Eb8F";
+    //if(props.coords[0] )
+
+    // this needs actual contract addy
+    const contractAddress = props.contract_address;
+    //const contractAddress = "0x610178dA211FEF7D417bC0e6FeD39F05609AD788";
+
     // Create contract instance
     const contractInstance = new web3.eth.Contract(mint_contract_abi, contractAddress);
 
