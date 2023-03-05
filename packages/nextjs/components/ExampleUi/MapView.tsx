@@ -119,13 +119,13 @@ function MyMapComponent({ googleMap, center, zoom, infoWindow, toggleMarkerModal
       google.maps.event.addListener(
         marker,
         "click",
-        () => toggleMarkerModal()
+        () => toggleMarkerModal(markerObj.id)
       )
     }
 
     googleMap = initGoogleMap();
     places.map(place => {
-      createMarker({ lat: place.geometry.location.lat, lng: place.geometry.location.lng });
+      createMarker({ id: place.id, lat: place.geometry.location.lat, lng: place.geometry.location.lng });
     });
   });
 
@@ -154,8 +154,16 @@ function Map({ locatedCenter }: { locatedCenter: google.maps.LatLngLiteral }) {
       googleMap?.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude})},
   });
   
-  const toggleMarkerModal = () => {
+  var name;
+  var formatted_address;
+  var contract_address;
+  var location;
+  const toggleMarkerModal = (i) => {
+    if (i != null) {
+        setPlaceId(i)
+    }
     setShowModal(!showModal)
+
   };
 
     const handleLocationError = function (
@@ -172,10 +180,15 @@ function Map({ locatedCenter }: { locatedCenter: google.maps.LatLngLiteral }) {
       infoWindow.open(googleMap);
     
     }
+
+  const [placeId, setPlaceId] = useState(0);
+
     return (
     <>
     { showModal && <ContractModal 
         toggleShowModal={toggleMarkerModal}
+        places={defaultPlaces.results}
+        placeId={placeId}
         /> }
       {!isGeolocationAvailable && <NoLocationFoundDialog />}
       {!isGeolocationEnabled && <NoLocationFoundDialog />}
