@@ -2,7 +2,7 @@ export const defaultPlaces = {
   results: [
     {
       formatted_address: "4655 Humboldt St, Denver CO 80216",
-      contract_address: "0x9db66840cB89Daf3063c3d0eB83831c87676E128",
+      contract_address: "0x703d45B6773f76a7009c2bF9CBe4FD2451A28c94",
       geometry: {
         location: {
           lat: 39.7815579153035,
@@ -46,16 +46,16 @@ export const defaultPlaces = {
       id: 1,
       name: "BUIDLHub",
       formatted_address: "3403 Brighton Blvd, Denver, CO 80216",
-      contract_address: "0x333423DdAad62Fa13C113B7747a6cac605f45423",
+      contract_address: "0x07be84aB882984e3eE51fbe4e6D84dEa971a1B91",
       geometry: {
         location: {
-            lat: 39.76976772652145,
-            lng: -104.97990631955899
-        }
-      }
-    }
+          lat: 39.76976772652145,
+          lng: -104.97990631955899,
+        },
+      },
+    },
   ],
 };
 //Longitude and latidude must be divided by 10^18
-//0x9db66840cB89Daf3063c3d0eB83831c87676E128
-//0x333423DdAad62Fa13C113B7747a6cac605f45423
+//0x703d45B6773f76a7009c2bF9CBe4FD2451A28c94
+//0x07be84aB882984e3eE51fbe4e6D84dEa971a1B91
