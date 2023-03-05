@@ -37,7 +37,7 @@ function ContractModal({
 
           <div className="pt-5">
             <center>
-              <Mint contract_address={place.contract_address} URI="insert_string_here" />
+              <Mint contract_address={place.contract_address} URI="https://bafybeiglr7zz2nhn6xmx7qhsnmvp5n56cs64rnyr56gvcmbmhpjex243oy.ipfs.w3s.link/spork.png" />
             </center>
           </div>
         </Modal>

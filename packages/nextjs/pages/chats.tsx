@@ -61,13 +61,14 @@ const Chats: NextPage = () => {
           setCurrentConversation,
           profilesRef,
         }}>
-        
 
-        
+
+
         </MainContext.Provider>
 
       </div>
     </>
+
   );
 };
 
