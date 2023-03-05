@@ -9,7 +9,7 @@ const Modal = ({ show, onClose, children, title }) => {
     setIsBrowser(true);
   }, []);
 
-  const handleCloseClick = (e) => {
+  const handleCloseClick = e => {
     e.preventDefault();
     onClose();
   };
@@ -18,29 +18,22 @@ const Modal = ({ show, onClose, children, title }) => {
     <StyledModalOverlay>
       <StyledModal>
         <StyledModalHeader>
-
           <a href="#" onClick={handleCloseClick}>
             x
           </a>
-
-          </StyledModalHeader>
-          <StyledModalHeader2>
-
+        </StyledModalHeader>
+        <StyledModalHeader2>
           <a href="#" onClick={handleCloseClick}>
             share
           </a>
         </StyledModalHeader2>
-        {title && <StyledModalTitle>{title}</StyledModalTitle>}
         <StyledModalBody>{children}</StyledModalBody>
       </StyledModal>
     </StyledModalOverlay>
   ) : null;
 
   if (isBrowser) {
-    return ReactDOM.createPortal(
-      modalContent,
-      document.getElementById("modal-root")
-    );
+    return ReactDOM.createPortal(modalContent, document.getElementById("modal-" + title));
   } else {
     return null;
   }
@@ -51,13 +44,13 @@ const StyledModalBody = styled.div`
 `;
 
 const StyledModalHeader = styled.div`
-  float:left;
+  float: left;
   font-size: 25px;
   flex-grow: 1;
 `;
 
 const StyledModalHeader2 = styled.div`
-  float:right;
+  float: right;
   font-size: 15px;
   flex-grow: 2;
 `;

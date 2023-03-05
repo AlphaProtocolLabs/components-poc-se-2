@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Camera, CameraType } from "react-camera-pro";
-import { Modal } from "../Modal";
-import { Mint } from "./Mint";
+import Modal from "../Modal";
+import Mint from "./Mint";
 import Image from "next/image"; // for Next.js
 import spork from "../../public/assets/spork.png";
 import { useStorage } from "./Web3StorageProvider";
@@ -150,7 +150,7 @@ const CameraComponent = () => {
       // Upload photo to web3.storage
       console.log(`Photo uploaded to web3.storage with CID: ${URI}`);
 
-      // setShowModal(true);
+      setShowModal(true);
 
       // Call any additional code you want here
     }
@@ -163,25 +163,27 @@ const CameraComponent = () => {
   return (
     <Wrapper>
       {showModal ? (
-        <Modal onClose={handleExit} show={showModal}>
-          <div className="pt-10">
-            <center>
-              <Image src={spork} alt="Spork Castle NFT" width={300} height={300} />
-            </center>
-          </div>
+        <div id="modal-mint">
+          <Modal onClose={handleExit} show={showModal} title="mint">
+            <div className="pt-10">
+              <center>
+                <Image src={spork} alt="Spork Castle NFT" width={300} height={300} />
+              </center>
+            </div>
 
-          <div className="pt-5">
-            <h1 className="text-center text-2xl font-bold"> SPORK CASTLE </h1>
-            <h3 className="text-center text-lg "> 0xAddress </h3>
-            <h4 className="text-center text-lg "> 4655 Humboldt St, Denver CO 80216 </h4>
-          </div>
+            <div className="pt-5">
+              <h1 className="text-center text-2xl font-bold"> SPORK CASTLE </h1>
+              <h3 className="text-center text-lg "> 0xAddress </h3>
+              <h4 className="text-center text-lg "> 4655 Humboldt St, Denver CO 80216 </h4>
+            </div>
 
-          <div className="pt-5">
-            <center>
-              <Mint />
-            </center>
-          </div>
-        </Modal>
+            <div className="pt-5">
+              <center>
+                <Mint />
+              </center>
+            </div>
+          </Modal>
+        </div>
       ) : (
         <Camera
           ref={camera}

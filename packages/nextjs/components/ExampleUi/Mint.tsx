@@ -1,12 +1,12 @@
-import React from 'react';
-import Web3 from 'web3';
-import mint_contract_abi from '../../../mint_contract_abi.json';
+import React from "react";
+import Web3 from "web3";
+import mint_contract_abi from "../../../mint_contract_abi.json";
 
-function Mint() {
+const Mint = () => {
   const handleClick = async () => {
     // this needs actual contract addy
-    
-    var web3 = new Web3(Web3.givenProvider)
+
+    var web3 = new Web3(Web3.givenProvider);
 
     const contractAddress = "0x0165878A594ca255338adfa4d48449f69242Eb8F";
     // Create contract instance
@@ -19,13 +19,14 @@ function Mint() {
     // Create transaction object
     const txObject = {
       from: account,
-      gasPrice: web3.utils.toHex(web3.utils.toWei('300', 'gwei')),
+      gasPrice: web3.utils.toHex(web3.utils.toWei("300", "gwei")),
       gasLimit: web3.utils.toHex(500000),
       to: contractAddress,
-      data: contractInstance.methods.mint(
-        "data:application/json;base64,eyJuYW1lIjogIlFSLU5GVC1QUk9UT1RZUEUiLCJkZXNjcmlwdGlvbiI6ICJRUiBORlQgYXNzb2NpYXRlZCB3aXRoIGEgcmVhbCB3b3JsZCBsb2NhdGlvbiIsImltYWdlIjogImh0dHBzOi8vaXBmcy5pby9pcGZzL1FtVGdxbmhGQk1rZlQ5czhQSEtjZFhCbjFmNWJHM1E1aG1CYVI0VTZob1R2YjE/ZmlsZW5hbWU9Q2hhaW5saW5rX0VsZi5wbmciLCJhdHRyaWJ1dGVzIjogW3sidHJhaXRfdHlwZSI6ICJkaXN0YW5jZSIsInZhbHVlIjogdGVzdCB2YWx1ZX1dfQ=="
-
-      ).encodeABI()
+      data: contractInstance.methods
+        .mint(
+          "data:application/json;base64,eyJuYW1lIjogIlFSLU5GVC1QUk9UT1RZUEUiLCJkZXNjcmlwdGlvbiI6ICJRUiBORlQgYXNzb2NpYXRlZCB3aXRoIGEgcmVhbCB3b3JsZCBsb2NhdGlvbiIsImltYWdlIjogImh0dHBzOi8vaXBmcy5pby9pcGZzL1FtVGdxbmhGQk1rZlQ5czhQSEtjZFhCbjFmNWJHM1E1aG1CYVI0VTZob1R2YjE/ZmlsZW5hbWU9Q2hhaW5saW5rX0VsZi5wbmciLCJhdHRyaWJ1dGVzIjogW3sidHJhaXRfdHlwZSI6ICJkaXN0YW5jZSIsInZhbHVlIjogdGVzdCB2YWx1ZX1dfQ==",
+        )
+        .encodeABI(),
     };
 
     try {
@@ -38,10 +39,14 @@ function Mint() {
   };
 
   return (
-    <div>
-      <button  class="rounded-full bg-pink-300 text-xl font-medium uppercase px-5" onClick={handleClick}>MINT</button>
-    </div>
+    <>
+      <div>
+        <button class="rounded-full bg-pink-300 text-xl font-medium uppercase px-5" onClick={handleClick}>
+          MINT
+        </button>
+      </div>
+    </>
   );
-}
+};
 
 export default Mint;
