@@ -89,7 +89,7 @@ function Mint(props) {
         <button className="rounded-full bg-pink-300 text-xl font-medium uppercase px-5" onClick={handleClick}>
           MINT
         </button>
-        { closeEnough != null && closeEnough && <p>Not close eough to redeem, sorry</p>}
+        { closeEnough != null && !closeEnough && <p>Not close eough to redeem, sorry</p>}
       </div>
     </>
   );
