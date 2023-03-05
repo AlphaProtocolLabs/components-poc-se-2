@@ -33,12 +33,12 @@ function Mint(props) {
 
       // Create contract instance
       const contractInstance = new web3.eth.Contract(mint_contract_abi, contractAddress);
-
+        //39781337239293500000
+        //1000000000000000000
       const coords = await contractInstance.methods.getCoords().call();
-      console.log(props.coords);
       console.log(coords);
-      const x_diff = Math.abs(parseInt(crd.latitude) - coords[0] / 1000000000000000000);
-      const y_diff = Math.abs(parseInt(crd.longitude) - coords[1] / 1000000000000000000);
+      const x_diff = Math.abs(parseInt(parseFloat(crd.latitude ) *1000000 - (coords[0] / 1000000000000)));
+      const y_diff = Math.abs(parseInt(parseFloat(crd.longitude ) *1000000 - (coords[1] / 1000000000000)));
       console.log(x_diff);
       console.log(y_diff);
       console.log("------------");
