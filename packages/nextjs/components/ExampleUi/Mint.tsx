@@ -1,6 +1,6 @@
 import React from "react";
 import Web3 from "web3";
-import mint_contract_abi from "../../../mint_contract_abi.json";
+import mint_contract_abi from "../../public/assets/mint_contract_abi.json";
 
 function Mint(props) {
   const handleClick = async () => {
