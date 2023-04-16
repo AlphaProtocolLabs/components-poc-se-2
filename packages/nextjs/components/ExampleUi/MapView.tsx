@@ -74,6 +74,7 @@ function createModel(url: string, x: number, y: number, height: number, viewer :
    4.852023653686047
   );
   
+Ion.defaultAccessToken = process.env.NEXT_PUBLIC_CESIUM_API_KEY;
 
 
 export default function Cesium() {
@@ -85,7 +86,6 @@ export default function Cesium() {
   const buildings = IonResource.fromAssetId(96188);
 
   
-  Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxN2YzYTM3OS01YTljLTQ1NzMtOTM2MC01Y2FkNGQzZTcyN2YiLCJpZCI6MTI4OTE2LCJpYXQiOjE2Nzg5MjAzMTd9.MF8c7abu2AkfBwUvVSEkRk2i6i4ES4LC1Y-_hA6hjVo";
   
 
   useEffect(() => {
