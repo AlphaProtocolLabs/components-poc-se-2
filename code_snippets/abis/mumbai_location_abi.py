@@ -136,20 +136,6 @@ mumbai_location_abi = [
         "type": "function",
     },
     {
-        "inputs": [{"internalType": "uint256", "name": "_id", "type": "uint256"}],
-        "name": "getURI",
-        "outputs": [{"internalType": "string", "name": "", "type": "string"}],
-        "stateMutability": "view",
-        "type": "function",
-    },
-    {
-        "inputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
-        "name": "id_to_URI",
-        "outputs": [{"internalType": "string", "name": "", "type": "string"}],
-        "stateMutability": "view",
-        "type": "function",
-    },
-    {
         "inputs": [
             {"internalType": "address", "name": "owner", "type": "address"},
             {"internalType": "address", "name": "operator", "type": "address"},
