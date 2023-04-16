@@ -1,238 +1,127 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import { ContractData, ContractInteraction } from "~~/components/ExampleUi";
-import { useEffect, useRef, ReactElement, useState } from "react";
-import { Wrapper, Status } from "@googlemaps/react-wrapper";
-import Spinner from "../Spinner";
-import { GeolocatedResult, useGeolocated } from "react-geolocated";
-import { defaultPlaces } from "./assets/DefaultPlaces";
-import ContractModal  from "./ContractModal"
+import { useEffect, useRef } from "react";
+import { Ion, IonResource, Viewer as CesiumViewer, CesiumTerrainProvider, OpenStreetMapImageryProvider, Cartesian3, Transforms, HeadingPitchRange, Matrix4, JulianDate } from "cesium";
+import { Viewer, CesiumComponentRef, ImageryLayer, Cesium3DTileset, Entity, ModelGraphics, Model, useCesium } from "resium";
 
-// Return map bounds based on list of places
-const getMapBounds = (map, maps, places) => {
-  const bounds = new maps.LatLngBounds();
-
-  places.forEach(place => {
-    bounds.extend(new maps.LatLng(place.geometry.location.lat, place.geometry.location.lng));
-  });
-  return bounds;
-};
-
-// Re-center map when resizing the window
-const bindResizeListener = (map, maps, bounds) => {
-  maps.event.addDomListenerOnce(map, "idle", () => {
-    maps.event.addDomListener(window, "resize", () => {
-      map.fitBounds(bounds);
-    });
-  });
-};
-
-const render = (status: Status): ReactElement => {
-  if (status === Status.FAILURE) return <ErrorDialog />;
-  return <Spinner width="25" height="25" />;
-};
-
-function MyMapComponent({ googleMap, center, zoom, infoWindow, toggleMarkerModal, handleLocationError }: 
-  { googleMap: google.maps.Map; 
-    center: google.maps.LatLngLiteral; 
-    zoom: number; 
-    infoWindow: google.maps.InfoWindow;
-    toggleMarkerModal: Function;
-    handleLocationError: Function;
-     }) {
-  const [places, setPlaces] = useState([]);
-  const ref = useRef();
-  
-
-
-  const fetchPlaces = () => {
-    setPlaces(defaultPlaces.results);
-  };
-  useEffect(() => {
-    fetchPlaces();
-
-    const initGoogleMap = () => {
-      let map = new window.google.maps.Map(ref.current, {
-        center,
-        zoom,
-      });
-      const locationButton = document.createElement("button");
-
-      locationButton.textContent = "Pan to Current Location";
-      locationButton.style = " background-color: #fff; \
-        border: 0; \
-        border-radius: 2px; \
-        box-shadow: 0 1px 4px -1px #0000004d; \
-        cursor: pointer; \
-        font: 400 18px Roboto,Arial,sans-serif; \
-        height: 40px; \
-        margin: 10px; \
-        overflow: hidden; \
-        padding: 0 .5em; "
-      locationButton.classList.add("custom-map-control-button");
-    
-      map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-
-      infoWindow = new google.maps.InfoWindow();
-
-    
-      locationButton.addEventListener("click", () => {
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (position: GeolocationPosition) => {
-              const pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              };
-    
-              googleMap.setCenter(pos);
-            },
-            () => {
-              handleLocationError(true, infoWindow, map.getCenter()!);
-            }
-          );
-        } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter()!);
-        }
-      });
-      return map;
-    }
-    
-    
-
-    const createMarker = markerObj => {
-      let marker = new window.google.maps.Marker({
-        position: { lat: parseFloat(markerObj.lat), lng: parseFloat(markerObj.lng) },
-        map: googleMap,
-        clickable: true,
-
-        /*
-      icon: {
-          url: icon,
-          scaledSize: new window.google.maps.Size(80, 80)
+function createModel(url: string, x: number, y: number, height: number, viewer : CesiumViewer) {
+    const position = Cartesian3.fromDegrees(x, y, height);
+    viewer.entities.add({
+      name: url,
+      position: position,
+      model: {
+        uri: url,
       },
-      */
-      });
-      
-      google.maps.event.addListener(
-        marker,
-        "click",
-        () => toggleMarkerModal(markerObj.id)
-      )
-    }
-
-    googleMap = initGoogleMap();
-    places.map(place => {
-      createMarker({ id: place.id, lat: place.geometry.location.lat, lng: place.geometry.location.lng });
     });
-  });
-
-  return <div ref={ref} id="map" />;
-}
-function Map({ locatedCenter }: { locatedCenter: google.maps.LatLngLiteral }) {
-  const [currentLocation, setCurrentLocation] = useState<any>(null);
-  const zoom = 15;
-  let googleMap = null;
-  var infoWindow = null;
-  const setInfoWindow = function (newInfoWindow) {
-    infoWindow = newInfoWindow; 
   }
-  const [showModal, setShowModal] = useState(false);
-  const [ gpsError, setGpsError] = useState(false);
-  const [ browserError, setBrowserError ] = useState(false);
-
-  const { coords, isGeolocationAvailable, isGeolocationEnabled, getPosition } = useGeolocated({
-    positionOptions: {
-      enableHighAccuracy: false,
-    },
-    watchPosition: false,
-    userDecisionTimeout: 5000,
-    onSuccess: (position: GeolocationPosition) => {
-      console.log(position);
-      googleMap?.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude})},
-  });
   
-  var name;
-  var formatted_address;
-  var contract_address;
-  var location;
-  const toggleMarkerModal = (i) => {
-    if (i != null) {
-        setPlaceId(i)
-    }
-    setShowModal(!showModal)
-
-  };
-
-    const handleLocationError = function (
-      browserHasGeolocation: boolean,
-      infoWindow: google.maps.InfoWindow,
-      pos: google.maps.LatLng
-    ) {
-      infoWindow.setPosition(pos);
-      infoWindow.setContent(
-        browserHasGeolocation
-          ? "Error: The Geolocation service failed."
-          : "Error: Your browser doesn't support geolocation."
-      );
-      infoWindow.open(googleMap);
-    
-    }
-
-  const [placeId, setPlaceId] = useState(0);
-
-    return (
-    <>
-    { showModal && <ContractModal 
-        toggleShowModal={toggleMarkerModal}
-        places={defaultPlaces.results}
-        placeId={placeId}
-        /> }
-      {!isGeolocationAvailable && <NoLocationFoundDialog />}
-      {!isGeolocationEnabled && <NoLocationFoundDialog />}
-      { !showModal && (
-        <Wrapper apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY} render={render}>
-          <MyMapComponent 
-            center={{ lat: coords?.latitude, lng: coords?.longitude }} 
-            zoom={zoom} 
-            googleMap={googleMap} 
-            infoWindow={infoWindow}
-            toggleMarkerModal={toggleMarkerModal}
-            handleLocationError={handleLocationError}
-          />{" "}
-        </Wrapper>
-      )
+  function updatePostProcess(viewModel, viewer : CesiumViewer) {
+        const bloom = viewer.scene.postProcessStages.bloom;
+        bloom.enabled = Boolean(viewModel.show);
+        bloom.uniforms.glowOnly = Boolean(viewModel.glowOnly);
+        bloom.uniforms.contrast = Number(viewModel.contrast);
+        bloom.uniforms.brightness = Number(viewModel.brightness);
+        bloom.uniforms.delta = Number(viewModel.delta);
+        bloom.uniforms.sigma = Number(viewModel.sigma);
+        bloom.uniforms.stepSize = Number(viewModel.stepSize);
       }
-    </>
+
+  const terrainProvider = new CesiumTerrainProvider({
+            url: IonResource.fromAssetId(1)
+        });
+
+  const imageryProvider = new OpenStreetMapImageryProvider({
+    url:  "https://stamen-tiles.a.ssl.fastly.net/watercolor/",
+    credit: "Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under CC BY SA."
+  });
+
+
+  const viewModel = {
+    show: true,
+    glowOnly: false,
+    contrast: 255,
+    brightness: 0.5,
+    delta: 2,
+    sigma: 10,
+    stepSize: 7,
+  };
+  
+  
+  
+  
+  
+  const numberOfBalloons = 1;
+  const lonIncrement = 0.00025;
+  const initialLon = -80.12693;
+  const lat = 25.79918;
+  const height = 25.0; 
+  /*
+  const robot = "https://cdn.statically.io/gh/AlphaProtocolLabs/AlphaProtocol/main/untitled.glb";
+  *
+  * 
+  */
+  
+  
+  // Viewport 
+  const target = Cartesian3.fromDegrees(
+    initialLon + lonIncrement*3,
+    lat - lonIncrement*2,
+    height + 100
   );
+  var transform = Transforms.eastNorthUpToFixedFrame(target);
+  
+  const offset = new Cartesian3(
+    5.048378684557974,
+    -1.852967044804245,
+   4.852023653686047
+  );
+  
+
+
+export default function Cesium() {
+  const ref = useRef<CesiumComponentRef<CesiumViewer>>(null);
+  const { viewer } = useCesium();
+
+  const robot = IonResource.fromAssetId(1644008);
+  const car = IonResource.fromAssetId(1643991);
+  const buildings = IonResource.fromAssetId(96188);
+
+  
+  Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxN2YzYTM3OS01YTljLTQ1NzMtOTM2MC01Y2FkNGQzZTcyN2YiLCJpZCI6MTI4OTE2LCJpYXQiOjE2Nzg5MjAzMTd9.MF8c7abu2AkfBwUvVSEkRk2i6i4ES4LC1Y-_hA6hjVo";
+  
+
+  useEffect(() => {
+    if (ref.current && ref.current.cesiumElement) {
+      // ref.current.cesiumElement is Cesium's Viewer
+      //
+      // DO SOMETHING
+
+      ref.current.cesiumElement.scene.globe.depthTestAgainstTerrain = true;
+      //updatePostProcess(viewModel, ref.current.cesiumElement);
+      
+    //for (let i = 0; i < numberOfBalloons; ++i) {
+    //const lon = initialLon + i * lonIncrement;
+    //createModel(robot, lon, lat, height, ref.current.cesiumElement);
+    
+
+    
+    ref.current.cesiumElement.scene.camera.lookAt(target, offset);
+
+    ref.current.cesiumElement.scene.camera.lookAtTransform(transform, new HeadingPitchRange(0, -Math.PI/8, 2900));
+    ref.current.cesiumElement.camera.lookAtTransform(Matrix4.IDENTITY); 
+    ref.current.cesiumElement.clock.currentTime = new JulianDate(2460029.148692);
+
+      //}
+    }
+  }, []);
+
+  return (
+    <Viewer 
+        ref={ref} 
+        terrainProvider={terrainProvider}
+        full >
+          <ImageryLayer imageryProvider={imageryProvider} />
+          <Cesium3DTileset url={buildings} />
+          <Cesium3DTileset url={car} />
+          <Cesium3DTileset url={robot} />
+    </Viewer>
+  )
 }
-
-const NoLocationFoundDialog = () => {
-  return (
-    <div className="alert alert-danger" role="alert">
-      Geolocation is not enabled
-    </div>
-  );
-};
-
-const ErrorDialog = () => {
-  return (
-    <div className="alert alert-danger" role="alert">
-      Failure
-    </div>
-  );
-};
-
-const MapView: NextPage = () => {
-  return (
-    <>
-      <div className="grid lg:grid-cols-2 flex-grow" data-theme="exampleUi">
-        <Map></Map>
-      </div>
-    </>
-  );
-};
-
-export default MapView;
